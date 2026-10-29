@@ -85,7 +85,7 @@ async function loadProfile(user) {
   showSession(user);
   let { data, error } = await supabase.from("profiles").select("username,bio").eq("id", user.id).maybeSingle();
   if (!data && !error) {
-    const suggested = safeUsername(user.user_metadata?.user_name || user.user_metadata?.preferred_username || document.getElementById("username").value || "Explorer");
+    const suggested = safeUsername(user.user_metadata?.username || user.user_metadata?.user_name || user.user_metadata?.preferred_username || document.getElementById("username").value || "Explorer");
     await upsertProfile(user, suggested, "");
     ({ data, error } = await supabase.from("profiles").select("username,bio").eq("id", user.id).maybeSingle());
   }
