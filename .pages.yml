@@ -1,0 +1,33 @@
+media:
+  input: media
+  output: /media
+
+content:
+  - name: chapters
+    label: Astronomy Chapters
+    type: file
+    path: content/chapters.json
+    format: json
+    list: true
+    fields:
+      - name: number
+        label: Chapter number
+        type: number
+        required: true
+      - name: title
+        label: Chapter title
+        type: string
+        required: true
+      - name: summary
+        label: Short summary
+        type: text
+      - name: body
+        label: Chapter text
+        type: rich-text
+      - name: references
+        label: Sources and references
+        type: rich-text
+
+settings:
+  content:
+    merge: true
