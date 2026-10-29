@@ -39,18 +39,21 @@ async function createDiscussion(event) {
 async function loadDiscussions() {
   if (!configured) return;
   root.replaceChildren(node("p", "", "Loading discussions…"));
-  let query = supabase.from("discussions").select("id,title,body,chapter_number,created_at,user_id,profiles(username)").order("created_at", { ascending: false }).limit(50);
+  let query = supabase.from("discussions").select("id,title,body,chapter_number,created_at,user_id").order("created_at", { ascending: false }).limit(50);
   if (chapterNumber) query = query.eq("chapter_number", chapterNumber);
   const { data, error } = await query;
   root.replaceChildren();
   if (error) { root.append(node("p", "", "Could not load discussions: " + error.message)); return; }
   if (!data?.length) { root.append(node("p", "", chapterNumber ? "No comments for this chapter yet. Start the conversation below." : "No discussions yet. Be the first to start one!")); return; }
-  data.forEach(item => root.append(renderDiscussion(item)));
+  const ids = [...new Set(data.map(item => item.user_id))];
+  const { data: profiles } = await supabase.from("profiles").select("id,username").in("id", ids);
+  const names = new Map((profiles || []).map(profile => [profile.id, profile.username]));
+  data.forEach(item => { item.author_name = names.get(item.user_id) || "Cosmic Atlas member"; root.append(renderDiscussion(item)); });
 }
 function renderDiscussion(item) {
   const card = node("article", "card");
   card.append(node("h3", "", item.title));
-  const by = item.profiles?.username || "Cosmic Atlas member";
+  const by = item.author_name || "Cosmic Atlas member";
   card.append(node("p", "meta", "By " + by + " · " + new Date(item.created_at).toLocaleString()));
   if (item.chapter_number) {
     const a = node("a", "", "Chapter " + item.chapter_number); a.href = "chapter.html?number=" + encodeURIComponent(item.chapter_number);
@@ -81,11 +84,14 @@ function renderDiscussion(item) {
   return card;
 }
 async function loadComments(id, target) {
-  const { data, error } = await supabase.from("comments").select("id,body,created_at,profiles(username)").eq("discussion_id", id).order("created_at", { ascending: true }).limit(100);
+  const { data, error } = await supabase.from("comments").select("id,body,created_at,user_id").eq("discussion_id", id).order("created_at", { ascending: true }).limit(100);
   target.replaceChildren();
   if (error) { target.append(node("p", "meta", "Comments could not load.")); return; }
+  const ids = [...new Set((data || []).map(comment => comment.user_id))];
+  const { data: profiles } = ids.length ? await supabase.from("profiles").select("id,username").in("id", ids) : { data: [] };
+  const names = new Map((profiles || []).map(profile => [profile.id, profile.username]));
   (data || []).forEach(c => {
-    const p = node("p", "meta"); const strong = node("strong", "", (c.profiles?.username || "Member") + ": ");
+    const p = node("p", "meta"); const strong = node("strong", "", (names.get(c.user_id) || "Member") + ": ");
     p.append(strong, document.createTextNode(c.body)); p.style.whiteSpace = "pre-wrap"; target.append(p);
   });
 }
