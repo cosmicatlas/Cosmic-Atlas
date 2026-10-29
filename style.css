@@ -47,3 +47,12 @@ dl.g dt{font-weight:700;color:var(--amber);margin-top:1.2rem;font-family:system-
 footer{border-top:1px solid var(--line);padding:1.5rem 1rem;text-align:center;font:.85rem system-ui,sans-serif;color:var(--mute)}
 footer a{color:var(--mute)}
 @media(min-width:700px){body{font-size:19px}.hero h1{font-size:4rem}}
+/* Account and community forms */
+label{display:block;font:600 .95rem system-ui,sans-serif;margin:.8rem 0 .25rem;color:var(--text)}
+input,textarea{display:block;width:100%;font:1rem/1.5 system-ui,sans-serif;color:var(--text);background:#080d1b;border:1px solid var(--line);border-radius:8px;padding:.75rem;margin:.25rem 0 1rem}
+textarea{resize:vertical;min-height:5rem}
+button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0}
+.comment-list{border-top:1px solid var(--line);margin-top:1rem;padding-top:.5rem}
+.reply-form{border-top:1px solid var(--line);margin-top:.7rem;padding-top:.5rem}
+[hidden]{display:none!important}
