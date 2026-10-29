@@ -14,21 +14,22 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!menu.hidde
 q.addEventListener("input",function(){var t=q.value.trim().toLowerCase(),out="",n=0;
 if(t.length>1){live.forEach(function(k){var c=BY[k];if(n<8&&(c[2]+" "+LIVE[k].sum).toLowerCase().indexOf(t)>-1){n++;out+='<li><a href="'+LIVE[k].file+'">'+c[1]+". "+esc(c[2])+"</a><br><small>Chapter</small></li>"}});
 GLOSSARY.forEach(function(g){if(n<8&&(g[0]+" "+g[1]).toLowerCase().indexOf(t)>-1){n++;out+='<li><a href="glossary.html#'+slug(g[0])+'">'+esc(g[0])+"</a><br><small>Glossary: "+esc(g[1].slice(0,80))+"…</small></li>"}});
-if(!n)out="<li>No match yet. New chapters are added every week.</li>"}res.innerHTML=out});
-document.getElementById("foot").innerHTML='<p>Cosmic Atlas is an independent, student-run project. Content may contain errors; please report them in the <a href="community.html">Community</a>.</p><p><a href="glossary.html">Glossary</a> &nbsp; <a href="community.html#rules">Community guidelines</a></p>';
+if(!n)out="<li>No matching published chapters or glossary terms yet.</li>"}res.innerHTML=out});
+document.getElementById("foot").innerHTML='<p>Cosmic Atlas is an independent, student-run writing project. Chapters are added when the author is ready.</p><p><a href="glossary.html">Glossary</a> &nbsp; <a href="community.html#rules">Community guidelines</a></p>';
 if(art){var w=art.innerText.split(/\s+/).length,m=Math.max(1,Math.round(w/200));
 document.getElementById("crumb").textContent=PARTS[BY[cur][0]];
-document.getElementById("meta").textContent="Chapter "+cur+" of "+CH.length+", "+m+" min read";
+document.getElementById("meta").textContent="Chapter "+cur+" of "+CH.length+" · Draft";
 var hs=art.querySelectorAll("h2:not(.notoc)"),li="";hs.forEach(function(h,i){if(!h.id)h.id="s"+i;li+='<li><a href="#'+h.id+'">'+esc(h.textContent)+"</a></li>"});
 document.getElementById("toc").innerHTML='<details><summary>On this page</summary><ol>'+li+"</ol></details>";
 var i=live.indexOf(cur),pn=document.getElementById("pn"),h="";
 if(i>0){var a=live[i-1];h+='<a href="'+LIVE[a].file+'"><small>Previous</small>'+esc(BY[a][2])+"</a>"}
 if(i>-1&&i<live.length-1){var b=live[i+1];h+='<a class="nx" href="'+LIVE[b].file+'"><small>Next</small>'+esc(BY[b][2])+"</a>"}
-pn.innerHTML=h||"<span>More chapters are on the way.</span>"}
+pn.innerHTML=h||"<span>Keep writing. Add this chapter to LIVE in data.js only when you are ready to publish it.</span>"}
 var plan=document.getElementById("plan");if(plan){var s="";PARTS.forEach(function(name,i){var all=CH.filter(function(c){return c[0]===i}),lv=all.filter(function(c){return LIVE[c[1]]});
 s+='<div class="card"><h3>'+esc(name)+"</h3><p>"+lv.length+" of "+all.length+" chapters published</p></div>"});plan.innerHTML=s}
 var gl=document.getElementById("gl");if(gl){var rows=GLOSSARY.slice().sort(function(a,b){return a[0].localeCompare(b[0])}),g="";
-rows.forEach(function(r){g+='<dt id="'+slug(r[0])+'">'+esc(r[0])+"</dt><dd>"+esc(r[1])+(r[2]&&LIVE[r[2]]?' <a href="'+LIVE[r[2]].file+'">Read more</a>':"")+"</dd>"});gl.innerHTML=g;
+if(!rows.length){gl.innerHTML='<p class="soon">No glossary entries yet. Add terms and definitions you have researched to GLOSSARY in data.js.</p>'}
+else{rows.forEach(function(r){g+='<dt id="'+slug(r[0])+'">'+esc(r[0])+"</dt><dd>"+esc(r[1])+(r[2]&&LIVE[r[2]]?' <a href="'+LIVE[r[2]].file+'">Read more</a>':"")+"</dd>"});gl.innerHTML=g}
 document.getElementById("gf").addEventListener("input",function(e){var t=e.target.value.toLowerCase();gl.querySelectorAll("dt").forEach(function(d){var dd=d.nextElementSibling,ok=(d.textContent+dd.textContent).toLowerCase().indexOf(t)>-1;d.hidden=dd.hidden=!ok})})}
 var cs=document.getElementById("cats");if(cs){var ok=SITE.user!=="YOUR-GITHUB-USERNAME",base="https://github.com/"+SITE.user+"/"+SITE.repo;
 if(!ok)document.getElementById("setup").style.display="block";
