@@ -6,7 +6,7 @@ var art=document.querySelector("article[data-ch]"),cur=art?+art.dataset.ch:0,cur
 var p="";PARTS.forEach(function(name,i){p+="<details"+(i===curPart?" open":"")+"><summary>"+esc(name)+"</summary><ul>";
 CH.forEach(function(c){if(c[0]===i){var L=LIVE[c[1]];p+="<li>"+(L?'<a href="'+L.file+'">'+c[1]+". "+esc(c[2])+"</a>":'<span class="soon">'+c[1]+". "+esc(c[2])+" (planned)</span>")+"</li>"}});p+="</ul></details>"});
 var top=document.getElementById("top");
-top.innerHTML='<a class="brand" href="index.html">Cosmic Atlas</a><nav class="links" aria-label="Main"><a href="glossary.html">Glossary</a><a href="community.html">Community</a></nav><button id="mb" type="button" aria-expanded="false" aria-controls="menu">Search &amp; chapters</button><div id="menu" hidden><label class="sr" for="q">Search chapters and terms</label><input id="q" type="search" placeholder="Search chapters and terms" autocomplete="off"><ul id="res" aria-live="polite"></ul><div id="parts">'+p+"</div></div>";
+top.innerHTML='<a class="brand" href="index.html">Cosmic Atlas</a><nav class="links" aria-label="Main"><a href="glossary.html">Glossary</a><a href="community.html">Community</a><a href="account.html">Account</a></nav><button id="mb" type="button" aria-expanded="false" aria-controls="menu">Search &amp; chapters</button><div id="menu" hidden><label class="sr" for="q">Search chapters and terms</label><input id="q" type="search" placeholder="Search chapters and terms" autocomplete="off"><ul id="res" aria-live="polite"></ul><div id="parts">'+p+"</div></div>";
 var mb=document.getElementById("mb"),menu=document.getElementById("menu"),q=document.getElementById("q"),res=document.getElementById("res");
 function tog(open){menu.hidden=!open;mb.setAttribute("aria-expanded",open);if(open)q.focus()}
 mb.onclick=function(){tog(menu.hidden)};
@@ -15,7 +15,7 @@ q.addEventListener("input",function(){var t=q.value.trim().toLowerCase(),out="",
 if(t.length>1){live.forEach(function(k){var c=BY[k];if(n<8&&(c[2]+" "+LIVE[k].sum).toLowerCase().indexOf(t)>-1){n++;out+='<li><a href="'+LIVE[k].file+'">'+c[1]+". "+esc(c[2])+"</a><br><small>Chapter</small></li>"}});
 GLOSSARY.forEach(function(g){if(n<8&&(g[0]+" "+g[1]).toLowerCase().indexOf(t)>-1){n++;out+='<li><a href="glossary.html#'+slug(g[0])+'">'+esc(g[0])+"</a><br><small>Glossary: "+esc(g[1].slice(0,80))+"…</small></li>"}});
 if(!n)out="<li>No matching published chapters or glossary terms yet.</li>"}res.innerHTML=out});
-document.getElementById("foot").innerHTML='<p>Cosmic Atlas is an independent, student-run writing project. Chapters are added when the author is ready.</p><p><a href="glossary.html">Glossary</a> &nbsp; <a href="community.html#rules">Community guidelines</a></p>';
+document.getElementById("foot").innerHTML='<p>Cosmic Atlas is an independent, student-run writing project. Chapters are added when the author is ready.</p><p><a href="glossary.html">Glossary</a> &nbsp; <a href="community.html#rules">Community guidelines</a> &nbsp; <a href="account.html">Account</a></p>';
 if(art){var w=art.innerText.split(/\s+/).length,m=Math.max(1,Math.round(w/200));
 document.getElementById("crumb").textContent=PARTS[BY[cur][0]];
 document.getElementById("meta").textContent="Chapter "+cur+" of "+CH.length+" · Draft";
