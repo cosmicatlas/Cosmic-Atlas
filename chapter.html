@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter | Cosmic Atlas</title><meta name="theme-color" content="#070a14"><link rel="stylesheet" href="style.css"></head><body>
+<header id="top"></header><main><article><p class="crumb"><a href="index.html">Cosmic Atlas</a> / Chapter</p><h1 id="chapter-title">Loading chapter…</h1><p class="meta" id="chapter-meta"></p><p id="chapter-summary" class="lede"></p><div id="chapter-body"></div><h2>References and research notes</h2><div id="chapter-references"></div><p><a href="https://app.pagescms.org/">Edit this chapter in the free writing dashboard</a></p></article></main><footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script src="data.js"></script><script src="app.js"></script>
+<script>
+(function(){
+ var n=Number(new URLSearchParams(location.search).get("number"))||2;
+ function safe(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+ fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()}).then(function(items){
+   var c=items.find(function(x){return Number(x.number)===n});
+   if(!c){document.getElementById("chapter-title").textContent="Chapter not found";document.getElementById("chapter-body").textContent="This chapter has not been created yet.";return;}
+   document.title="Chapter "+Number(c.number)+": "+String(c.title||"Untitled")+" | Cosmic Atlas";
+   document.getElementById("chapter-title").textContent="Chapter "+Number(c.number)+": "+String(c.title||"Untitled");
+   document.getElementById("chapter-meta").textContent="Cosmic Atlas · Chapter "+Number(c.number);
+   document.getElementById("chapter-summary").textContent=String(c.summary||"");
+   var render=function(s){var html=window.marked?marked.parse(String(s||"")):"<pre>"+safe(s)+"</pre>";return window.DOMPurify?DOMPurify.sanitize(html):html;};
+   document.getElementById("chapter-body").innerHTML=render(c.body);
+   document.getElementById("chapter-references").innerHTML=render(c.references);
+ }).catch(function(){document.getElementById("chapter-title").textContent="Could not load chapter";document.getElementById("chapter-body").textContent="Please refresh the page and try again.";});
+})();
+</script></body></html>
