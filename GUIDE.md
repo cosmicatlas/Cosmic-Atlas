@@ -51,3 +51,24 @@ Community discussions use GitHub Discussions. Enable it in repository Settings �
 
 ## Hosting and future plans
 GitHub Pages can host the static site for free. If you later consider ads or sponsorships, check the current hosting rules and the terms of any advertising service first; don't assume revenue is guaranteed.
+
+
+## Accounts, profiles, discussions, and chapter comments
+The static website uses Supabase for hosted authentication and database features. GitHub Pages still serves the site files; Supabase stores accounts, public profiles, discussions, and comments.
+
+### One-time setup (site owner)
+1. Create a free project at https://supabase.com/ and open its project dashboard.
+2. In **Project Settings → API** (or **Connect**), copy the project URL and the **publishable key** (or legacy anon key). Put those into `supabase-config.js`. Never use the `service_role` key in browser code.
+3. Open **SQL Editor**, paste the contents of `supabase-schema.sql`, and run it.
+4. In **Authentication → URL Configuration**, add the exact published website URL to the allowed site/redirect URLs. For a GitHub Pages project site, it may look like `https://qu sai705.github.io/Cosmic-Atlas/` without the space; use the actual URL shown in repository Pages settings.
+5. In **Authentication → Sign In / Providers**, enable GitHub. Create a GitHub OAuth App under GitHub Settings → Developer settings → OAuth Apps. Use the Supabase GitHub callback URL shown on the provider page as the OAuth callback, then paste the OAuth Client ID and Client Secret into Supabase. Keep the Client Secret only in Supabase, never in this repository.
+6. In Supabase email authentication settings, keep email confirmation enabled. The default email service may have strict sending limits; for public launch, review Supabase's current email delivery guidance.
+7. Enable GitHub Pages in repository Settings → Pages if it is not already enabled, then wait for deployment and test signup, email confirmation, sign-in, GitHub sign-in, profile editing, posting, and comments.
+
+### What the new files do
+- `account.html` and `account.js`: email/password signup and sign-in, GitHub OAuth, editable username and bio.
+- `community.html` and `community.js`: public discussion feed, authenticated posting and replies, and chapter-specific discussion links.
+- `supabase-config.js`: public project URL and publishable key placeholders.
+- `supabase-schema.sql`: tables and row-level security policies for profiles, discussions, and comments.
+
+The code is committed but cannot work fully until the Supabase project is created and configured. Do not publish private keys or user data in GitHub. Add moderation/reporting procedures before inviting a large public audience.
