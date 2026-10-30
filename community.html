@@ -10,7 +10,7 @@
 <label for="community-name">Community name</label><input id="community-name" maxlength="40" minlength="3" required placeholder="Black Hole Research">
 <label for="community-description">Description</label><textarea id="community-description" maxlength="300" rows="2" placeholder="What should people discuss here?"></textarea>
 <button class="btn" type="submit">Create community</button></form></section>
-<section id="group-directory"><h2>Explore communities</h2><p class="meta">Find a group to join, or create one above.</p><div id="community-list" class="community-grid" aria-live="polite"><p>Loading communities…</p></div></section>
+<section id="group-directory"><h2>Explore communities</h2><p class="meta">Search public communities by name, topic, or description. No account needed.</p><form id="community-search-form" class="community-search"><label for="community-search">Search communities</label><div class="community-search-row"><input id="community-search" type="search" maxlength="80" placeholder="Try black holes, cosmology, space news…"><button class="btn" type="submit">Search</button><button class="btn alt" id="clear-community-search" type="button">Clear</button></div></form><p id="community-search-summary" class="meta" aria-live="polite"></p><div id="community-list" class="community-grid" aria-live="polite"><p>Loading communities…</p></div></section>
 <section id="group-view" hidden>
 <p><a href="community.html">← All communities</a></p><div id="group-header" class="card"></div>
 <section class="card"><h2>Start a post</h2><form id="discussion-form">
