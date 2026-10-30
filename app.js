@@ -1,7 +1,6 @@
 (function(){
 // Cinematic Cosmic Atlas launch sequence
-if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
- var intro=document.createElement("div");
+var intro=document.createElement("div");
  intro.className="atlas-intro atlas-cinematic";
  intro.setAttribute("role","status");
  intro.setAttribute("aria-label","Cosmic Atlas is launching");
@@ -12,7 +11,6 @@ if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
  var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},900)};
  var introTimer=window.setTimeout(finishIntro,5700);
  intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);finishIntro()});
-}
 
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
