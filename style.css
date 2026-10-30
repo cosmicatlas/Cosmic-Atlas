@@ -265,3 +265,9 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
 #community-form,#discussion-form{max-width:100%}
 #community-form button,#discussion-form button{margin-top:.2rem}
 #general-feed .card,#community-app .card{overflow-wrap:anywhere}
+
+.community-search{max-width:42rem;margin:1rem 0 0}
+.community-search-row{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap}
+.community-search-row input{flex:1 1 13rem;min-width:0}
+#community-search-summary{min-height:1.3em;margin:.5rem 0 1rem}
+@media(max-width:480px){.community-search-row .btn{flex:1}}
