@@ -271,3 +271,14 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
 .community-search-row input{flex:1 1 13rem;min-width:0}
 #community-search-summary{min-height:1.3em;margin:.5rem 0 1rem}
 @media(max-width:480px){.community-search-row .btn{flex:1}}
+
+
+/* User-created community tags */
+.tag-picker{border:1px solid var(--line);border-radius:10px;padding:.7rem 1rem;margin:1rem 0}
+.tag-picker legend{font-weight:700;color:var(--amber)}
+.tag-create-row{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap}
+.tag-create-row input{flex:1 1 12rem;min-width:0}
+.tag-list,.post-tags{display:flex;gap:.45rem;flex-wrap:wrap;margin:.7rem 0}
+.community-tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:.12rem .65rem;font:600 .8rem system-ui,sans-serif;color:var(--cyan)}
+.tag-option{display:inline-flex;align-items:center;gap:.3rem;margin:.25rem .7rem .25rem 0;font:.9rem system-ui,sans-serif}
+.tag-option input{width:auto;min-height:auto}
