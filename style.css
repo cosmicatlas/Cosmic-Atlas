@@ -198,57 +198,57 @@ html[data-theme="light"] .photo-helper{background:#fff}
 html[data-theme="light"] .soon{color:var(--mute)}
 
 
-/* Animated daylight theme */
+
+/* Lightweight daylight theme */
 body,header#top,.card,#toc details,.pn a,details.qa,#theme-toggle{
-  transition:background-color .55s ease,color .4s ease,border-color .4s ease,box-shadow .55s ease;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
 }
 html[data-theme="light"] body{
-  background-image:
-    radial-gradient(ellipse at 12% 0%,#d8eaff 0,transparent 48%),
-    radial-gradient(ellipse at 92% 22%,#f1e3ff 0,transparent 48%),
-    linear-gradient(145deg,#f8fbff,#f1f5ff 55%,#fff9f0);
-  background-size:140% 140%;
-  animation:daylight-sky 16s ease-in-out infinite alternate;
+  background-color:var(--bg);
+  background-image:radial-gradient(ellipse at 12% 0%,#d8eaff 0,transparent 48%),radial-gradient(ellipse at 92% 22%,#f1e3ff 0,transparent 48%),linear-gradient(145deg,#f8fbff,#f1f5ff 55%,#fff9f0);
+  background-size:100% 100%;
+  animation:none;
 }
-@media(prefers-reduced-motion:no-preference){
-  html[data-theme="light"] body::before{
-    background-image:
-      radial-gradient(2px 2px at 20px 30px,#8aa9d866 98%,transparent),
-      radial-gradient(1px 1px at 80px 110px,#b49bd988 98%,transparent),
-      radial-gradient(2px 2px at 150px 60px,#e4b66c88 98%,transparent),
-      radial-gradient(1px 1px at 220px 160px,#79b9c988 98%,transparent);
-    background-size:260px 220px,310px 270px,370px 290px,430px 330px;
-    animation:daylight-particles 38s linear infinite,daylight-arrive 1.2s ease-out both;
-  }
+html[data-theme="light"] body::before{
+  background-image:radial-gradient(2px 2px at 20px 30px,#8aa9d844 98%,transparent),radial-gradient(1px 1px at 80px 110px,#b49bd966 98%,transparent),radial-gradient(2px 2px at 150px 60px,#e4b66c66 98%,transparent);
+  background-size:260px 220px,310px 270px,370px 290px;
+  animation:none;filter:none;
 }
-html[data-theme="light"] header#top{
-  box-shadow:0 5px 24px #8ca8d51c;
-  backdrop-filter:blur(16px);
+html[data-theme="light"] header#top{box-shadow:0 3px 12px #8ca8d512;backdrop-filter:none}
+html[data-theme="light"] .card,html[data-theme="light"] #toc details,html[data-theme="light"] details.qa{box-shadow:0 4px 14px #8298bd0d}
+html[data-theme="light"] .card:hover{box-shadow:0 6px 16px #8298bd18;transform:none}
+#theme-toggle{position:relative;overflow:hidden}
+#theme-toggle::after{content:"";position:absolute;width:30px;height:30px;right:7px;top:50%;border-radius:50%;background:radial-gradient(circle,#ffe8a3 0 22%,#ffd16b44 48%,transparent 72%);opacity:0;transform:translateY(-50%);transition:opacity .2s ease;pointer-events:none}
+html[data-theme="light"] #theme-toggle::after{opacity:1}
+
+/* A bright sunrise version of the opening sequence in light mode */
+html[data-theme="light"] .atlas-intro.atlas-cinematic{
+  background:radial-gradient(ellipse at 50% 42%,#fff8e8 0%,#e8f2ff 48%,#d9e4fa 100%);
+  color:#243653;
 }
-html[data-theme="light"] .card,
-html[data-theme="light"] #toc details,
-html[data-theme="light"] details.qa{
-  box-shadow:0 8px 26px #8298bd12;
+html[data-theme="light"] .atlas-cinematic:before{
+  background:radial-gradient(ellipse at 50% 55%,#fff0c9 0%,#d6e7ff 38%,#e9e1fa 72%);
 }
-html[data-theme="light"] .card:hover{
-  box-shadow:0 14px 34px #8298bd2b;
-  transform:translateY(-3px);
-}
-#theme-toggle{position:relative;overflow:hidden;isolation:isolate}
-#theme-toggle::after{
-  content:"";position:absolute;width:34px;height:34px;right:7px;top:50%;
-  border-radius:50%;background:radial-gradient(circle,#ffe8a3 0 22%,#ffd16b55 48%,transparent 72%);
-  opacity:0;transform:translateY(-50%) scale(.4);transition:opacity .35s ease,transform .45s ease;z-index:-1;
-}
-html[data-theme="light"] #theme-toggle::after{opacity:1;transform:translateY(-50%) scale(1.7)}
-@keyframes daylight-sky{from{background-position:0% 0%}to{background-position:100% 100%}}
-@keyframes daylight-particles{from{background-position:0 0,0 0,0 0,0 0}to{background-position:260px 220px,-310px 270px,370px -290px,-430px 330px}}
-@keyframes daylight-arrive{from{opacity:0;filter:blur(5px)}to{opacity:1;filter:blur(0)}}
+html[data-theme="light"] .cinema-nebula{opacity:.5;mix-blend-mode:multiply;filter:blur(38px)}
+html[data-theme="light"] .nebula-a{background:radial-gradient(ellipse,#ffd98c 0%,#f5b9a8 30%,transparent 72%)}
+html[data-theme="light"] .nebula-b{background:radial-gradient(ellipse,#9edce8 0%,#c6b5f0 38%,transparent 72%)}
+html[data-theme="light"] .cinema-star{background:#647da7;box-shadow:0 0 5px 1px #829ac855}
+html[data-theme="light"] .cinema-sun{background:radial-gradient(circle,#fff 0%,#fff0b5 18%,#ffc66d 42%,#f49a78 60%,transparent 74%);filter:none}
+html[data-theme="light"] .cinema-planet{background:radial-gradient(circle at 28% 27%,#fff2c9 0%,#f2b879 14%,#7bb7cf 38%,#426a9d 68%,#263c68 86%);box-shadow:inset -28px -12px 34px #1b315b55,inset 8px 5px 22px #ffffffbb,0 0 32px #85bde888,0 0 75px #f5c88b66}
+html[data-theme="light"] .planet-cloud{background:repeating-linear-gradient(155deg,transparent 0 18px,#fff9df88 20px,#a8e3e888 26px,transparent 35px)}
+html[data-theme="light"] .cinema-ring{border-color:#d4a96dcc;border-left-color:#75bcd988;border-right-color:#fff9;box-shadow:0 0 16px #93b8dc88}
+html[data-theme="light"] .cinema-flare{background:linear-gradient(90deg,transparent,#b5d8f5,#fff,#ffe1a7,transparent);box-shadow:0 0 20px 4px #a9c9e888}
+html[data-theme="light"] .cinema-kicker{color:#607b9e}
+html[data-theme="light"] .cinema-title{color:#263b5e;text-shadow:0 2px 16px #ffffff,0 0 35px #9dbce8}
+html[data-theme="light"] .cinema-title span{color:#b77736}
+html[data-theme="light"] .cinema-sub{color:#63799a}
+html[data-theme="light"] .cinema-progress{background:#7189aa33}
+html[data-theme="light"] .cinema-progress i{background:#8abbdc;box-shadow:0 0 10px #8abbdc}
+html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#ffffff88;border-color:#8299b766}
 @media(max-width:700px){
-  html[data-theme="light"] body{animation-duration:24s}
-  html[data-theme="light"] .card:hover{transform:none}
+  html[data-theme="light"] .cinema-nebula{filter:blur(20px);opacity:.32}
+  html[data-theme="light"] .cinema-planet{box-shadow:inset -16px -7px 20px #1b315b55,inset 4px 3px 12px #ffffff99,0 0 16px #85bde866}
 }
 @media(prefers-reduced-motion:reduce){
   body,header#top,.card,#toc details,.pn a,details.qa,#theme-toggle{transition:none}
-  html[data-theme="light"] body{animation:none}
 }
