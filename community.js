@@ -18,6 +18,7 @@ else{
  $("clear-community-search").addEventListener("click",()=>{$("community-search").value="";loadDirectory()});
  $("community-search").addEventListener("input",()=>{if(!$("community-search").value.trim())loadDirectory()});
  $("discussion-form").addEventListener("submit",createPost);
+ $("community-tag-form").addEventListener("submit",createCommunityTag);
 }
 function updateAuthUI(){
  $("sign-in-note").replaceChildren();
@@ -72,13 +73,29 @@ async function loadGroup(slug){
  const form=$("discussion-form");form.hidden=!isMember;
  if(!currentUser){const p=node("p","meta","Sign in to join and post. ");p.append(accountLink());header.append(p)}
  else if(!isMember)header.append(node("p","meta","Join this community to publish posts and take part."));
- await loadFeed(g.id);
+ await loadCommunityTags(g.id);await loadFeed(g.id);
 }
 async function toggleMembership(g){
  if(!currentUser)return say("Sign in to join communities.",true);
  if(isMember){const {error}=await supabase.from("community_members").delete().eq("community_id",g.id).eq("user_id",currentUser.id);if(error)return say(error.message,true);say("You left c/"+g.slug)}
  else{const {error}=await supabase.from("community_members").insert({community_id:g.id,user_id:currentUser.id});if(error&&error.code!=="23505")return say(error.message,true);say("You joined c/"+g.slug)}
  await loadGroup(g.slug);
+}
+async function loadCommunityTags(groupId){
+ const list=$("community-tag-list"),options=$("post-tag-options");
+ const {data,error}=await supabase.from("community_tags").select("id,name,slug").eq("community_id",groupId).order("name");
+ list.replaceChildren();options.replaceChildren();
+ if(error){list.textContent="Tags unavailable. Run the latest database schema.";return}
+ if(!data?.length){list.textContent="No tags yet. Members can add the first one.";options.textContent="No tags available yet.";return}
+ for(const tag of data){list.append(node("span","community-tag",tag.name));const label=node("label","tag-option"),input=node("input");input.type="checkbox";input.name="post-tags";input.value=tag.id;label.append(input,document.createTextNode(tag.name));options.append(label)}
+}
+async function createCommunityTag(e){
+ e.preventDefault();if(!currentUser||!activeGroup||!isMember)return say("Join this community before adding tags.",true);
+ const name=$("new-community-tag").value.trim(),slug=name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,24);
+ if(name.length<2||!slug)return say("Use a tag with 2–24 characters and at least one letter or number.",true);
+ const {error}=await supabase.from("community_tags").insert({community_id:activeGroup.id,name,slug,created_by:currentUser.id});
+ if(error)return say(error.code==="23505"?"That tag already exists.":error.message,true);
+ $("community-tag-form").reset();say("Tag added.");await loadCommunityTags(activeGroup.id);
 }
 async function createPost(e){
  e.preventDefault();if(!currentUser||!activeGroup||!isMember)return say("Join this community before posting.",true);
