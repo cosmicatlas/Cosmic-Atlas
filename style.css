@@ -282,3 +282,43 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
 .community-tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:.12rem .65rem;font:600 .8rem system-ui,sans-serif;color:var(--cyan)}
 .tag-option{display:inline-flex;align-items:center;gap:.3rem;margin:.25rem .7rem .25rem 0;font:.9rem system-ui,sans-serif}
 .tag-option input{width:auto;min-height:auto}
+
+
+/* Gentle ambient motion for the light theme */
+@keyframes atlas-daylight-drift{
+  0%{background-position:0 0,0 0,0 0;opacity:.48}
+  50%{background-position:90px 70px,-65px 85px,45px -35px;opacity:.72}
+  100%{background-position:180px 140px,-130px 170px,90px -70px;opacity:.48}
+}
+@keyframes atlas-daylight-glow{
+  0%,100%{background-position:12% 0%,92% 22%,0 0}
+  50%{background-position:18% 8%,84% 30%,0 0}
+}
+@media(prefers-reduced-motion:no-preference){
+  html[data-theme="light"] body{
+    animation:atlas-daylight-glow 24s ease-in-out infinite;
+    background-size:140% 140%,140% 140%,100% 100%;
+  }
+  html[data-theme="light"] body::before{
+    animation:atlas-daylight-drift 65s linear infinite;
+    will-change:background-position,opacity;
+  }
+  html[data-theme="light"] .card,
+  html[data-theme="light"] #toc details,
+  html[data-theme="light"] details.qa{
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  }
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  html[data-theme="light"] .card:hover,
+  html[data-theme="light"] #toc details:hover,
+  html[data-theme="light"] details.qa:hover{
+    transform:translateY(-2px);
+    border-color:#b8c9e4;
+    box-shadow:0 9px 22px #8298bd20;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="light"] body,
+  html[data-theme="light"] body::before{animation:none!important}
+}
