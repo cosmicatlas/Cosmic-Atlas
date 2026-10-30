@@ -3,7 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script src="data.js"></script><script src="app.js"></script>
 <script>
 (function(){
- var n=Number(new URLSearchParams(location.search).get("number"))||2;\n document.getElementById("chapter-discussion-link").href="community.html?chapter="+n;
+ var n=Number(new URLSearchParams(location.search).get("number"))||2;
+ document.getElementById("chapter-discussion-link").href="community.html?chapter="+n;
  function safe(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
  fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()}).then(function(items){
    var c=items.find(function(x){return Number(x.number)===n});
