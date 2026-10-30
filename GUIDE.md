@@ -12,13 +12,15 @@ The site contains a chapter outline and a blank writing draft, not finished astr
 - `style.css`: visual design.
 
 ## Add photos and diagrams to a chapter (phone-friendly)
-1. Open the free Pages CMS dashboard: https://app.pagescms.org/ and authorize it for `Qusai705/Cosmic-Atlas` if prompted.
-2. Open **Astronomy Chapters**, choose the chapter, then tap into **Chapter text**.
-3. Use the rich-text editor's image/insert-media control to upload a picture from your phone. The site is configured to store uploads in the repository's `media/` folder and publish them at `/media/`.
-4. Add meaningful alternative text (describe what the image shows) and a caption/source near the image when the editor offers those fields. Save/commit the chapter, wait for GitHub Pages to redeploy, then open the chapter page to check it.
-5. Use images you created, have permission to reuse, or that are clearly licensed for reuse. Keep the source/credit and license in the chapter references. Avoid huge files; resize very large phone photos before uploading.
 
-Images in chapter text are displayed responsively on phones and desktop. The chapter reader uses the Markdown/rich-text image markup saved by Pages CMS.
+1. Open the chapter on your live site and scroll to **Add a photo to this chapter**.
+2. Upload your image to the repository's `media` folder: open the repository in GitHub, tap **Add file → Upload files**, choose the photo, and commit it. If the folder is not listed, use a path such as `media/orion-nebula.jpg` when adding the file.
+3. In the chapter's photo helper, enter the path (for example `media/orion-nebula.jpg`), a useful image description, and an optional caption/credit. Tap **Create image markup**, then **Copy markup**.
+4. Open [Pages CMS](https://app.pagescms.org/) → **Astronomy Chapters** → choose the chapter. Paste the generated markup into **Chapter text** if the editor accepts it, then save/commit.
+5. If Pages CMS strips or displays the markup as plain text, edit `content/chapters.json` directly in GitHub and place the generated markup in the chapter's `body` string. Keep the JSON valid; don't add unescaped line breaks inside the string.
+6. Wait for GitHub Pages to redeploy and check the chapter on your phone.
+
+Use images you created or have permission to reuse. Keep the source and license in the chapter references. The site displays chapter images responsively. Use relative paths like `media/orion-nebula.jpg` rather than paths beginning with `/media/`, because this is a project site under `/Cosmic-Atlas/`.
 
 ## Write from your phone
 1. Open https://github.com/Qusai705/Cosmic-Atlas in your browser.
