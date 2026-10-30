@@ -196,3 +196,59 @@ html[data-theme="light"] .cosmic-track{background:#dbe2ef}
 html[data-theme="light"] .cosmic-track i{border-color:var(--bg)}
 html[data-theme="light"] .photo-helper{background:#fff}
 html[data-theme="light"] .soon{color:var(--mute)}
+
+
+/* Animated daylight theme */
+body,header#top,.card,#toc details,.pn a,details.qa,#theme-toggle{
+  transition:background-color .55s ease,color .4s ease,border-color .4s ease,box-shadow .55s ease;
+}
+html[data-theme="light"] body{
+  background-image:
+    radial-gradient(ellipse at 12% 0%,#d8eaff 0,transparent 48%),
+    radial-gradient(ellipse at 92% 22%,#f1e3ff 0,transparent 48%),
+    linear-gradient(145deg,#f8fbff,#f1f5ff 55%,#fff9f0);
+  background-size:140% 140%;
+  animation:daylight-sky 16s ease-in-out infinite alternate;
+}
+@media(prefers-reduced-motion:no-preference){
+  html[data-theme="light"] body::before{
+    background-image:
+      radial-gradient(2px 2px at 20px 30px,#8aa9d866 98%,transparent),
+      radial-gradient(1px 1px at 80px 110px,#b49bd988 98%,transparent),
+      radial-gradient(2px 2px at 150px 60px,#e4b66c88 98%,transparent),
+      radial-gradient(1px 1px at 220px 160px,#79b9c988 98%,transparent);
+    background-size:260px 220px,310px 270px,370px 290px,430px 330px;
+    animation:daylight-particles 38s linear infinite,daylight-arrive 1.2s ease-out both;
+  }
+}
+html[data-theme="light"] header#top{
+  box-shadow:0 5px 24px #8ca8d51c;
+  backdrop-filter:blur(16px);
+}
+html[data-theme="light"] .card,
+html[data-theme="light"] #toc details,
+html[data-theme="light"] details.qa{
+  box-shadow:0 8px 26px #8298bd12;
+}
+html[data-theme="light"] .card:hover{
+  box-shadow:0 14px 34px #8298bd2b;
+  transform:translateY(-3px);
+}
+#theme-toggle{position:relative;overflow:hidden;isolation:isolate}
+#theme-toggle::after{
+  content:"";position:absolute;width:34px;height:34px;right:7px;top:50%;
+  border-radius:50%;background:radial-gradient(circle,#ffe8a3 0 22%,#ffd16b55 48%,transparent 72%);
+  opacity:0;transform:translateY(-50%) scale(.4);transition:opacity .35s ease,transform .45s ease;z-index:-1;
+}
+html[data-theme="light"] #theme-toggle::after{opacity:1;transform:translateY(-50%) scale(1.7)}
+@keyframes daylight-sky{from{background-position:0% 0%}to{background-position:100% 100%}}
+@keyframes daylight-particles{from{background-position:0 0,0 0,0 0,0 0}to{background-position:260px 220px,-310px 270px,370px -290px,-430px 330px}}
+@keyframes daylight-arrive{from{opacity:0;filter:blur(5px)}to{opacity:1;filter:blur(0)}}
+@media(max-width:700px){
+  html[data-theme="light"] body{animation-duration:24s}
+  html[data-theme="light"] .card:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body,header#top,.card,#toc details,.pn a,details.qa,#theme-toggle{transition:none}
+  html[data-theme="light"] body{animation:none}
+}
