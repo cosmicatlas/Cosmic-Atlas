@@ -19,8 +19,13 @@ var art=document.querySelector("article[data-ch]"),cur=art?+art.dataset.ch:0,cur
 var p="";PARTS.forEach(function(name,i){p+="<details"+(i===curPart?" open":"")+"><summary>"+esc(name)+"</summary><ul>";
 CH.forEach(function(c){if(c[0]===i){var L=LIVE[c[1]];p+="<li>"+(L?'<a href="'+L.file+'">'+c[1]+". "+esc(c[2])+"</a>":'<span class="soon">'+c[1]+". "+esc(c[2])+" (planned)</span>")+"</li>"}});p+="</ul></details>"});
 var top=document.getElementById("top");
-top.innerHTML='<a class="brand" href="index.html">Cosmic Atlas</a><nav class="links" aria-label="Main"><a href="glossary.html">Glossary</a><a href="community.html">Community</a><a href="account.html">Account</a></nav><button id="mb" type="button" aria-expanded="false" aria-controls="menu">Search &amp; chapters</button><div id="menu" hidden><label class="sr" for="q">Search chapters and terms</label><input id="q" type="search" placeholder="Search chapters and terms" autocomplete="off"><ul id="res" aria-live="polite"></ul><div id="parts">'+p+"</div></div>";
+top.innerHTML='<a class="brand" href="index.html">Cosmic Atlas</a><nav class="links" aria-label="Main"><a href="glossary.html">Glossary</a><a href="community.html">Community</a><a href="account.html">Account</a></nav><button id="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">☀️ Light</button><button id="mb" type="button" aria-expanded="false" aria-controls="menu">Search &amp; chapters</button><div id="menu" hidden><label class="sr" for="q">Search chapters and terms</label><input id="q" type="search" placeholder="Search chapters and terms" autocomplete="off"><ul id="res" aria-live="polite"></ul><div id="parts">'+p+"</div></div>";
 var mb=document.getElementById("mb"),menu=document.getElementById("menu"),q=document.getElementById("q"),res=document.getElementById("res");
+var themeButton=document.getElementById("theme-toggle");
+var savedTheme="dark";try{savedTheme=localStorage.getItem("cosmic-atlas-theme")||"dark"}catch(e){}
+function setTheme(theme){document.documentElement.setAttribute("data-theme",theme);var light=theme==="light";themeButton.textContent=light?"🌙 Dark":"☀️ Light";themeButton.setAttribute("aria-label",light?"Switch to dark mode":"Switch to light mode");themeButton.setAttribute("aria-pressed",String(light));try{localStorage.setItem("cosmic-atlas-theme",theme)}catch(e){}}
+setTheme(savedTheme==="light"?"light":"dark");
+themeButton.addEventListener("click",function(){setTheme(document.documentElement.getAttribute("data-theme")==="light"?"dark":"light")});
 function tog(open){menu.hidden=!open;mb.setAttribute("aria-expanded",open);if(open)q.focus()}
 mb.onclick=function(){tog(menu.hidden)};
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!menu.hidden){tog(false);mb.focus()}});
