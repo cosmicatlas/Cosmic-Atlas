@@ -101,8 +101,10 @@ async function createPost(e){
  e.preventDefault();if(!currentUser||!activeGroup||!isMember)return say("Join this community before posting.",true);
  const title=$("discussion-title").value.trim(),body=$("discussion-body").value.trim();
  if(title.length<5||!body)return say("Add a title and some text.",true);
- const {error}=await supabase.from("discussions").insert({user_id:currentUser.id,title,body,community_id:activeGroup.id,chapter_number:chapterNumber});
+ const {data:post,error}=await supabase.from("discussions").insert({user_id:currentUser.id,title,body,community_id:activeGroup.id,chapter_number:chapterNumber}).select("id").single();
  if(error)return say(error.message,true);
+ const selected=[...$("post-tag-options").querySelectorAll("input:checked")].map(input=>Number(input.value));
+ if(selected.length){const result=await supabase.from("discussion_tags").insert(selected.map(tag_id=>({discussion_id:post.id,tag_id})));if(result.error)return say("Post published, but tags could not be saved: "+result.error.message,true)}
  $("discussion-form").reset();say("Post published.");await loadFeed(activeGroup.id);
 }
 async function loadGeneralFeed(){
@@ -127,6 +129,8 @@ async function renderPosts(posts,target){
  const names=new Map((profiles||[]).map(p=>[p.id,p.username]));
  for(const item of posts){
   const card=node("article","card"),h=node("h3","",item.title);card.append(h);
+  const {data:tagLinks}=await supabase.from("discussion_tags").select("tag_id,community_tags(name)").eq("discussion_id",item.id);
+  if(tagLinks?.length){const row=node("div","post-tags");tagLinks.forEach(link=>{if(link.community_tags?.name)row.append(node("span","community-tag",link.community_tags.name))});if(row.childNodes.length)card.append(row)}
   card.append(node("p","meta","By "+(names.get(item.user_id)||"Cosmic Atlas member")+" · "+new Date(item.created_at).toLocaleString()));
   if(item.chapter_number){const a=node("a","","Chapter "+item.chapter_number);a.href="chapter.html?number="+encodeURIComponent(item.chapter_number);const p=node("p");p.append("Related to ",a);card.append(p)}
   const body=node("p","",item.body);body.style.whiteSpace="pre-wrap";card.append(body);
