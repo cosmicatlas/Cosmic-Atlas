@@ -132,3 +132,21 @@ button:disabled{opacity:.5;cursor:not-allowed}
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Interactive cosmic timeline explorer */
+.cosmic-explorer{font-family:system-ui,sans-serif;overflow:hidden}
+.cosmic-explorer h2{margin-top:.2rem}
+.cosmic-explorer input[type=range]{accent-color:var(--amber);padding:0;margin:1rem 0;cursor:pointer}
+.cosmic-time-readout{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem 1rem;align-items:center;margin:.4rem 0 1rem}
+.cosmic-time-readout strong{font-size:1.15rem;color:var(--amber)}
+.cosmic-time-readout span{color:var(--cyan);font-weight:600}
+.cosmic-track{height:7px;background:#303b60;border-radius:99px;position:relative;margin:.8rem 0 .5rem}
+.cosmic-track>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--cyan),var(--amber));border-radius:99px;transition:width .2s ease}
+.cosmic-track i{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--text);border:2px solid var(--bg);transform:translate(-50%,-50%)}
+.cosmic-milestones{display:flex;justify-content:space-between;gap:.3rem;font-size:.68rem;line-height:1.25;color:var(--mute)}
+.cosmic-milestones span{max-width:19%;text-align:center}
+@media(prefers-reduced-motion:no-preference){
+ .cosmic-explorer{animation:atlas-page-enter .7s .12s ease-out both}
+ .cosmic-time-readout strong{transition:color .2s ease}
+}
