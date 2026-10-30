@@ -62,3 +62,11 @@ button:disabled{opacity:.5;cursor:not-allowed}
 #chapter-body figure{margin:1.5rem 0}
 #chapter-body figcaption{font:.9rem/1.5 system-ui,sans-serif;color:var(--mute);text-align:center;margin-top:.5rem}
 #chapter-body p:has(> img){margin:1.5rem 0}
+
+/* Phone-friendly chapter image helper */
+.photo-helper{font-family:system-ui,sans-serif;font-size:1rem}
+.photo-helper h2{margin-top:.3rem}
+.photo-helper label{margin:.8rem 0 .25rem}
+.photo-helper input,.photo-helper textarea{font-size:16px}
+.photo-helper .actions{align-items:center}
+.photo-helper .meta{overflow-wrap:anywhere}
