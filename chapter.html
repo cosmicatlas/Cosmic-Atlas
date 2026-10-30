@@ -1,5 +1,16 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter | Cosmic Atlas</title><meta name="theme-color" content="#070a14"><link rel="stylesheet" href="style.css"></head><body>
-<header id="top"></header><main><article><p class="crumb"><a href="index.html">Cosmic Atlas</a> / Chapter</p><h1 id="chapter-title">Loading chapter…</h1><p class="meta" id="chapter-meta"></p><p id="chapter-summary" class="lede"></p><div id="chapter-body"></div><h2>References and research notes</h2><div id="chapter-references"></div><p><a class="btn alt" id="chapter-discussion-link" href="community.html?chapter=2">Discuss this chapter</a></p><p><a href="https://app.pagescms.org/">Edit this chapter in the free writing dashboard</a></p>
+<header id="top"></header><main><article><p class="crumb"><a href="index.html">Cosmic Atlas</a> / Chapter</p><h1 id="chapter-title">Loading chapter…</h1><p class="meta" id="chapter-meta"></p><p id="chapter-summary" class="lede"></p><div id="chapter-body"></div>
+<section class="card cosmic-explorer" aria-labelledby="cosmic-explorer-title">
+<h2 id="cosmic-explorer-title">Explore cosmic time</h2>
+<p>Move the slider to travel through the universe's 13.8-billion-year history. The dates are approximate.</p>
+<label for="cosmic-time">Time since the Big Bang</label>
+<input id="cosmic-time" type="range" min="0" max="13800" step="10" value="0">
+<div class="cosmic-time-readout"><strong id="cosmic-age">0 million years</strong><span id="cosmic-era">The beginning</span></div>
+<div class="cosmic-track" aria-hidden="true"><span id="cosmic-progress"></span><i style="left:0%"></i><i style="left:1.2%"></i><i style="left:2.7%"></i><i style="left:27.5%"></i><i style="left:100%"></i></div>
+<div class="cosmic-milestones" id="cosmic-milestones"><span>Big Bang</span><span>First atoms</span><span>First stars</span><span>Solar system</span><span>Today</span></div>
+<p id="cosmic-description" class="meta" aria-live="polite">The universe begins in an extremely hot, dense state.</p>
+</section>
+<h2>References and research notes</h2><div id="chapter-references"></div><p><a class="btn alt" id="chapter-discussion-link" href="community.html?chapter=2">Discuss this chapter</a></p><p><a href="https://app.pagescms.org/">Edit this chapter in the free writing dashboard</a></p>
 <section class="card photo-helper" aria-labelledby="photo-helper-title">
 <h2 id="photo-helper-title">Add a photo to this chapter</h2>
 <p>Use this helper to create the image markup. First upload your image to the repository's <code>media</code> folder in GitHub, or use a direct image URL from a source you have permission to use. Then paste the path or URL below.</p>
@@ -37,6 +48,23 @@
    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(photoMarkup.value).then(function(){photoStatus.textContent="Copied. Paste it into the chapter text.";}).catch(function(){photoStatus.textContent="Markup selected. Use Copy from your phone's text menu.";});}
    else photoStatus.textContent="Markup selected. Use Copy from your phone's text menu.";
  });
+ var cosmicSlider=document.getElementById("cosmic-time"),cosmicAge=document.getElementById("cosmic-age"),cosmicEra=document.getElementById("cosmic-era"),cosmicDescription=document.getElementById("cosmic-description"),cosmicProgress=document.getElementById("cosmic-progress");
+ var cosmicEvents=[
+  {t:0,age:"0 million years",era:"The Big Bang",desc:"The universe begins in an extremely hot, dense state. Our current physics cannot yet describe the very first instant."},
+  {t:0.00038,age:"380,000 years",era:"The first atoms",desc:"Electrons combine with nuclei to form neutral atoms. Light can travel freely: this ancient light is observed today as the cosmic microwave background."},
+  {t:0.1,age:"100 million years",era:"The first stars",desc:"The first generations of stars begin to shine, ending the cosmic dark ages."},
+  {t:1,age:"1 billion years",era:"Galaxies grow",desc:"Galaxies and larger cosmic structures continue to form and evolve."},
+  {t:9.2,age:"9.2 billion years",era:"The Solar System forms",desc:"Our Solar System forms from a cloud of gas and dust."},
+  {t:13.8,age:"13.8 billion years",era:"Today",desc:"The universe is still expanding. Its expansion is currently accelerating."}
+ ];
+ function updateCosmicTime(){
+  var t=Number(cosmicSlider.value),event=cosmicEvents[0];
+  cosmicEvents.forEach(function(e){if(t>=e.t)event=e;});
+  cosmicAge.textContent=t===0?"The beginning":(t<1?(Math.round(t*1000)+" million years"):(t.toFixed(1)+" billion years"));
+  cosmicEra.textContent=event.era;cosmicDescription.textContent=event.desc;
+  cosmicProgress.style.width=(t/13.8*100)+"%";
+ }
+ cosmicSlider.addEventListener("input",updateCosmicTime);updateCosmicTime();
  function safe(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
  fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()}).then(function(items){
    var c=items.find(function(x){return Number(x.number)===n});
