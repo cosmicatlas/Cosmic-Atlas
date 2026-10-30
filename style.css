@@ -56,3 +56,9 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .comment-list{border-top:1px solid var(--line);margin-top:1rem;padding-top:.5rem}
 .reply-form{border-top:1px solid var(--line);margin-top:.7rem;padding-top:.5rem}
 [hidden]{display:none!important}
+
+/* Images added inside chapter rich-text content */
+#chapter-body img{display:block;max-width:100%;height:auto;margin:1.2rem auto;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px #0005}
+#chapter-body figure{margin:1.5rem 0}
+#chapter-body figcaption{font:.9rem/1.5 system-ui,sans-serif;color:var(--mute);text-align:center;margin-top:.5rem}
+#chapter-body p:has(> img){margin:1.5rem 0}
