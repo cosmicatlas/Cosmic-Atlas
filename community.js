@@ -14,6 +14,9 @@ else{
  supabase.auth.onAuthStateChange((_e,session)=>{currentUser=session?.user||null;updateAuthUI();if(activeGroup)loadGroup(activeGroup.slug)});
  supabase.auth.getSession().then(({data})=>{currentUser=data.session?.user||null;updateAuthUI();loadDirectory();if(groupSlug)openGroup(groupSlug);else loadGeneralFeed()});
  $("community-form").addEventListener("submit",createCommunity);
+ $("community-search-form").addEventListener("submit",e=>{e.preventDefault();loadDirectory($("community-search").value)});
+ $("clear-community-search").addEventListener("click",()=>{$("community-search").value="";loadDirectory()});
+ $("community-search").addEventListener("input",()=>{if(!$("community-search").value.trim())loadDirectory()});
  $("discussion-form").addEventListener("submit",createPost);
 }
 function updateAuthUI(){
@@ -21,12 +24,24 @@ function updateAuthUI(){
  if(!currentUser){$("sign-in-note").append("Browse freely. Sign in to create groups, join them, and post. ",accountLink());$("create-community-card").querySelector("form").hidden=true;$("discussion-form").hidden=true}
  else{$("sign-in-note").textContent="Signed in. Create a group or join one to start posting.";$("create-community-card").querySelector("form").hidden=false}
 }
-async function loadDirectory(){
- const box=$("community-list");box.replaceChildren(node("p","","Loading communities…"));
- const {data,error}=await supabase.from("communities").select("id,name,slug,description,created_at").order("created_at",{ascending:false}).limit(100);
- box.replaceChildren();if(error){box.append(node("p","","Could not load groups: "+error.message));return}
- if(!data?.length){box.append(node("p","","No communities yet. Create the first one!"));return}
- for(const g of data){const card=node("article","card community-card");const h=node("h3");const a=node("a","",g.name);a.href="community.html?group="+encodeURIComponent(g.slug);h.append(a);card.append(h);card.append(node("p","",g.description||"A community for astronomy discussion."));card.append(node("p","meta","c/"+g.slug));const open=node("a","btn alt","View community");open.href=a.href;card.append(open);box.append(card)}
+async function loadDirectory(searchTerm=""){
+ const box=$("community-list"),summary=$("community-search-summary");
+ box.replaceChildren(node("p","","Searching communities…"));
+ let query=supabase.from("communities").select("id,name,slug,description,created_at").order("created_at",{ascending:false});
+ const term=searchTerm.trim().replace(/[,%()_*]/g," ").replace(/\\s+/g," ").slice(0,80);
+ if(term)query=query.or("name.ilike.%"+term+"%,slug.ilike.%"+term+"%,description.ilike.%"+term+"%");
+ const {data,error}=await query.limit(100);
+ box.replaceChildren();
+ if(error){summary.textContent="";box.append(node("p","","Could not search communities: "+error.message));return}
+ summary.textContent=term?(data?.length?("Search results for “"+term+"” ("+data.length+" shown)"):("No communities found for “"+term+"”. Try another keyword.")):(data?.length?("Showing "+data.length+" communities"):"No communities yet. Create the first one!");
+ if(!data?.length)return;
+ for(const g of data){
+  const card=node("article","card community-card"),h=node("h3"),a=node("a","",g.name);
+  a.href="community.html?group="+encodeURIComponent(g.slug);h.append(a);card.append(h);
+  card.append(node("p","",g.description||"A community for astronomy discussion."));
+  card.append(node("p","meta","c/"+g.slug));
+  const open=node("a","btn alt","View community");open.href=a.href;card.append(open);box.append(card);
+ }
 }
 async function createCommunity(e){
  e.preventDefault();if(!currentUser)return say("Sign in first to create a community.",true);
