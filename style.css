@@ -252,3 +252,16 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
 @media(prefers-reduced-motion:reduce){
   body,header#top,.card,#toc details,.pn a,details.qa,#theme-toggle{transition:none}
 }
+
+
+/* Reddit-style community directory and group pages */
+.community-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:.8rem}
+.community-card{margin:0;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.community-card h3{overflow-wrap:anywhere}
+.community-card .meta{margin-top:auto;padding:.4rem 0}
+#group-header h2{margin-top:.2rem}
+#group-header .btn{margin-top:.5rem}
+#group-view{margin-top:1rem}
+#community-form,#discussion-form{max-width:100%}
+#community-form button,#discussion-form button{margin-top:.2rem}
+#general-feed .card,#community-app .card{overflow-wrap:anywhere}
