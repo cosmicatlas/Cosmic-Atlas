@@ -70,3 +70,65 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .photo-helper input,.photo-helper textarea{font-size:16px}
 .photo-helper .actions{align-items:center}
 .photo-helper .meta{overflow-wrap:anywhere}
+
+
+/* Subtle space-themed motion across Cosmic Atlas */
+@keyframes atlas-page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes atlas-stars-drift {
+  from { background-position: 0 0, 35px 55px, 90px 20px; }
+  to { background-position: 0 180px, 35px 235px, 90px 200px; }
+}
+@keyframes atlas-glow {
+  0%, 100% { opacity: .45; }
+  50% { opacity: .8; }
+}
+@keyframes atlas-title-rise {
+  from { opacity: 0; transform: translateY(18px); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, #ffffffb8 99%, transparent),
+      radial-gradient(1px 1px at 80px 110px, #7fd0e088 99%, transparent),
+      radial-gradient(2px 2px at 150px 60px, #c3b3ff70 99%, transparent);
+    background-size: 190px 180px, 230px 240px, 300px 200px;
+    animation: atlas-stars-drift 48s linear infinite;
+  }
+  main { animation: atlas-page-enter .65s ease-out both; }
+  .hero h1, main > h1 { animation: atlas-title-rise .85s cubic-bezier(.2,.7,.2,1) both; }
+  .tagline { animation: atlas-page-enter .8s .12s ease-out both; }
+  .card, #plan > .card, #cms-chapters > .card {
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  }
+  .card:hover, #plan > .card:hover, #cms-chapters > .card:hover {
+    transform: translateY(-3px);
+    border-color: #52649a;
+    box-shadow: 0 12px 30px #0004;
+  }
+  .btn, button, .links a, #parts summary, a {
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px #0004; }
+  .brand:hover { text-shadow: 0 0 16px #f3b95f80; }
+  #chapter-body img { transition: transform .3s ease, box-shadow .3s ease; }
+  #chapter-body img:hover { transform: scale(1.012); box-shadow: 0 12px 34px #0007; }
+  #menu:not([hidden]) { animation: atlas-page-enter .2s ease-out both; }
+  .photo-helper { animation: atlas-glow 6s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
