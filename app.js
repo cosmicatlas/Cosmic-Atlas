@@ -1,14 +1,17 @@
 (function(){
-// Cosmic Atlas opening animation
+// Cinematic Cosmic Atlas launch sequence
 if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
  var intro=document.createElement("div");
- intro.className="atlas-intro";
+ intro.className="atlas-intro atlas-cinematic";
  intro.setAttribute("role","status");
- intro.setAttribute("aria-label","Cosmic Atlas is opening");
- intro.innerHTML='<div class="intro-stars"></div><div class="intro-content"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="intro-planet"></div><div class="intro-title">COSMIC ATLAS</div><div class="intro-subtitle">Explore the universe</div><div class="intro-loading"><span></span></div><button class="intro-skip" type="button">Skip</button></div>';
+ intro.setAttribute("aria-label","Cosmic Atlas is launching");
+ intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars"></div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><span class="planet-cloud"></span></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button">Skip intro</button>';
  document.body.appendChild(intro);
- var introTimer=window.setTimeout(function(){intro.classList.add("intro-hide");window.setTimeout(function(){intro.remove()},700)},2600);
- intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);intro.classList.add("intro-hide");window.setTimeout(function(){intro.remove()},700)});
+ var starLayer=intro.querySelector(".cinema-stars");
+ for(var si=0;si<64;si++){var star=document.createElement("i");star.className="cinema-star";star.style.setProperty("--x",(Math.random()*100)+"%");star.style.setProperty("--y",(Math.random()*100)+"%");star.style.setProperty("--d",(1+Math.random()*2.5)+"px");star.style.setProperty("--delay",(Math.random()*2)+"s");starLayer.appendChild(star);}
+ var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},900)};
+ var introTimer=window.setTimeout(finishIntro,5700);
+ intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);finishIntro()});
 }
 
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
