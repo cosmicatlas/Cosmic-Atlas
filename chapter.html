@@ -1,10 +1,43 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter | Cosmic Atlas</title><meta name="theme-color" content="#070a14"><link rel="stylesheet" href="style.css"></head><body>
-<header id="top"></header><main><article><p class="crumb"><a href="index.html">Cosmic Atlas</a> / Chapter</p><h1 id="chapter-title">Loading chapter…</h1><p class="meta" id="chapter-meta"></p><p id="chapter-summary" class="lede"></p><div id="chapter-body"></div><h2>References and research notes</h2><div id="chapter-references"></div><p><a class="btn alt" id="chapter-discussion-link" href="community.html?chapter=2">Discuss this chapter</a></p><p><a href="https://app.pagescms.org/">Edit this chapter in the free writing dashboard</a></p></article></main><footer id="foot"></footer>
+<header id="top"></header><main><article><p class="crumb"><a href="index.html">Cosmic Atlas</a> / Chapter</p><h1 id="chapter-title">Loading chapter…</h1><p class="meta" id="chapter-meta"></p><p id="chapter-summary" class="lede"></p><div id="chapter-body"></div><h2>References and research notes</h2><div id="chapter-references"></div><p><a class="btn alt" id="chapter-discussion-link" href="community.html?chapter=2">Discuss this chapter</a></p><p><a href="https://app.pagescms.org/">Edit this chapter in the free writing dashboard</a></p>
+<section class="card photo-helper" aria-labelledby="photo-helper-title">
+<h2 id="photo-helper-title">Add a photo to this chapter</h2>
+<p>Use this helper to create the image markup. First upload your image to the repository's <code>media</code> folder in GitHub, or use a direct image URL from a source you have permission to use. Then paste the path or URL below.</p>
+<label for="photo-path">Image path or direct image URL</label>
+<input id="photo-path" type="text" placeholder="media/orion-nebula.jpg" autocomplete="off">
+<label for="photo-alt">Image description (alt text)</label>
+<input id="photo-alt" type="text" placeholder="The Orion Nebula glowing in space">
+<label for="photo-caption">Caption (optional)</label>
+<input id="photo-caption" type="text" placeholder="Image credit or a short explanation">
+<div class="actions"><button class="btn" id="make-photo-markup" type="button">Create image markup</button><button class="btn alt" id="copy-photo-markup" type="button">Copy markup</button></div>
+<label for="photo-markup">Markup to paste into the chapter text</label>
+<textarea id="photo-markup" rows="4" readonly placeholder="Your image markup will appear here."></textarea>
+<p class="meta">Next: open Pages CMS → Astronomy Chapters → your chapter, paste the markup into Chapter text, and save. If the editor doesn't accept Markdown, use GitHub to edit <code>content/chapters.json</code> instead. Keep image paths relative, such as <code>media/orion-nebula.jpg</code>, for the project website.</p>
+<p id="photo-helper-status" class="meta" role="status" aria-live="polite"></p>
+</section>
+</article></main><footer id="foot"></footer>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script src="data.js"></script><script src="app.js"></script>
 <script>
 (function(){
  var n=Number(new URLSearchParams(location.search).get("number"))||2;
  document.getElementById("chapter-discussion-link").href="community.html?chapter="+n;
+ var photoPath=document.getElementById("photo-path"),photoAlt=document.getElementById("photo-alt"),photoCaption=document.getElementById("photo-caption"),photoMarkup=document.getElementById("photo-markup"),photoStatus=document.getElementById("photo-helper-status");
+ function makePhotoMarkup(){
+   var path=photoPath.value.trim(),alt=photoAlt.value.trim(),caption=photoCaption.value.trim();
+   if(!path){photoStatus.textContent="Enter an image path or direct image URL first.";photoMarkup.value="";return false;}
+   if(/[\\s()]/.test(path)&&!/^https?:\\/\\//i.test(path)){photoStatus.textContent="Use a simple filename without spaces or parentheses, such as media/orion-nebula.jpg.";return false;}
+   var md="!["+alt.replace(/\\]/g,"\\\\]")+"]("+path.replace(/\\)/g,"%29")+" )";
+   md=md.replace(/ \\)$/,")");
+   if(caption)md+="\\n\\n*"+caption.replace(/\\*/g,"\\\\*")+"*";
+   photoMarkup.value=md;photoStatus.textContent="Markup created. Tap Copy markup, then paste it into the chapter text.";return true;
+ }
+ document.getElementById("make-photo-markup").addEventListener("click",makePhotoMarkup);
+ document.getElementById("copy-photo-markup").addEventListener("click",function(){
+   if(!photoMarkup.value&&!makePhotoMarkup())return;
+   photoMarkup.focus();photoMarkup.select();
+   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(photoMarkup.value).then(function(){photoStatus.textContent="Copied. Paste it into the chapter text.";}).catch(function(){photoStatus.textContent="Markup selected. Use Copy from your phone's text menu.";});}
+   else photoStatus.textContent="Markup selected. Use Copy from your phone's text menu.";
+ });
  function safe(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
  fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()}).then(function(items){
    var c=items.find(function(x){return Number(x.number)===n});
