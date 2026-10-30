@@ -13,9 +13,11 @@
 <section id="group-directory"><h2>Explore communities</h2><p class="meta">Search public communities by name, topic, or description. No account needed.</p><form id="community-search-form" class="community-search"><label for="community-search">Search communities</label><div class="community-search-row"><input id="community-search" type="search" maxlength="80" placeholder="Try black holes, cosmology, space news…"><button class="btn" type="submit">Search</button><button class="btn alt" id="clear-community-search" type="button">Clear</button></div></form><p id="community-search-summary" class="meta" aria-live="polite"></p><div id="community-list" class="community-grid" aria-live="polite"><p>Loading communities…</p></div></section>
 <section id="group-view" hidden>
 <p><a href="community.html">← All communities</a></p><div id="group-header" class="card"></div>
+<section class="card"><h2>Community tags</h2><p class="meta">Members can create custom tags for posts in this community.</p><form id="community-tag-form"><label for="new-community-tag">Add a tag</label><div class="tag-create-row"><input id="new-community-tag" maxlength="24" minlength="2" required placeholder="e.g. Black holes"><button class="btn" type="submit">Add tag</button></div></form><div id="community-tag-list" class="tag-list" aria-live="polite"></div></section>
 <section class="card"><h2>Start a post</h2><form id="discussion-form">
 <label for="discussion-title">Title</label><input id="discussion-title" maxlength="140" minlength="5" required placeholder="What would you like to discuss?">
 <label for="discussion-body">Your post</label><textarea id="discussion-body" maxlength="6000" rows="5" required placeholder="Share your question, idea, reasoning, and sources…"></textarea>
+<fieldset class="tag-picker"><legend>Post tags</legend><p class="meta">Choose tags created by this community.</p><div id="post-tag-options"><p class="meta">Loading community tags…</p></div></fieldset>
 <button class="btn" type="submit">Publish post</button></form></section>
 <h2>Posts</h2><div id="community-app" aria-live="polite"><p>Loading posts…</p></div>
 </section>
