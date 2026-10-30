@@ -2,15 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const url=window.COSMIC_SUPABASE_URL||"",key=window.COSMIC_SUPABASE_KEY||"";
 const supabase=createClient(url,key);
 const status=document.getElementById("editor-status"),login=document.getElementById("editor-login"),form=document.getElementById("editor-form");
-let providerToken="";
+
 function say(s,bad=false){status.textContent=s;status.style.color=bad?"#ffb4b4":"var(--green)";}
 async function check(session){
-  providerToken=session?.provider_token||"";
   if(!session?.user){login.hidden=false;form.hidden=true;say("Sign in with the owner GitHub account.");return;}
   const identity=session.user.identities?.find(x=>x.provider==="github");
-  const username=identity?.identity_data?.user_name||identity?.identity_data?.preferred_username||"";
   if(!identity){login.hidden=false;form.hidden=true;say("This account has no linked GitHub identity.",true);return;}
-  if(!providerToken){login.hidden=false;form.hidden=true;say("Your GitHub authorization token is unavailable. Sign out and sign in again with GitHub.",true);return;}
   // The Edge Function independently verifies the GitHub token and account ID before every save.
   login.hidden=true;form.hidden=false;say("Signed in. The server will verify cosmicatlas again when you save.");
   await loadChapter();
@@ -31,16 +28,15 @@ document.getElementById("editor-github").addEventListener("click",async()=>{
 document.getElementById("load-chapter").addEventListener("click",loadChapter);
 document.getElementById("save-chapter").addEventListener("click",async()=>{
  const sessionResult=await supabase.auth.getSession();const session=sessionResult.data.session;
- providerToken=session?.provider_token||providerToken;
- if(!session?.access_token||!providerToken){say("Please sign in again with GitHub before saving.",true);return;}
+ if(!session?.access_token){say("Please sign in again with GitHub before saving.",true);return;}
  const chapter={number:Number(document.getElementById("chapter-number").value),title:document.getElementById("chapter-title").value,summary:document.getElementById("chapter-summary").value,body:document.getElementById("chapter-body").value,references:document.getElementById("chapter-references").value};
  if(!Number.isInteger(chapter.number)||chapter.number<1||!chapter.title.trim()){say("Enter a valid chapter number and title.",true);return;}
  say("Verifying owner account and saving…");
- const response=await fetch(url+"/functions/v1/owner-chapter-save",{method:"POST",headers:{"Content-Type":"application/json","apikey":key,"Authorization":"Bearer "+session.access_token},body:JSON.stringify({providerToken,chapter})});
+ const response=await fetch(url+"/functions/v1/owner-chapter-save",{method:"POST",headers:{"Content-Type":"application/json","apikey":key,"Authorization":"Bearer "+session.access_token},body:JSON.stringify({chapter})});
  const result=await response.json().catch(()=>({}));
  if(!response.ok){say(result.error||"Save failed. Please try again.",true);return;}
  say("Chapter "+result.number+" saved. The public chapter page will now show this version.");
 });
-document.getElementById("editor-signout").addEventListener("click",async()=>{await supabase.auth.signOut();providerToken="";form.hidden=true;login.hidden=false;say("Signed out.");});
+document.getElementById("editor-signout").addEventListener("click",async()=>{await supabase.auth.signOut();form.hidden=true;login.hidden=false;say("Signed out.");});
 supabase.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>check(session),0);});
 supabase.auth.getSession().then(({data})=>check(data.session));
