@@ -1,4 +1,16 @@
 (function(){
+// Cosmic Atlas opening animation
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+ var intro=document.createElement("div");
+ intro.className="atlas-intro";
+ intro.setAttribute("role","status");
+ intro.setAttribute("aria-label","Cosmic Atlas is opening");
+ intro.innerHTML='<div class="intro-stars"></div><div class="intro-content"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="intro-planet"></div><div class="intro-title">COSMIC ATLAS</div><div class="intro-subtitle">Explore the universe</div><div class="intro-loading"><span></span></div><button class="intro-skip" type="button">Skip</button></div>';
+ document.body.appendChild(intro);
+ var introTimer=window.setTimeout(function(){intro.classList.add("intro-hide");window.setTimeout(function(){intro.remove()},700)},2600);
+ intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);intro.classList.add("intro-hide");window.setTimeout(function(){intro.remove()},700)});
+}
+
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
