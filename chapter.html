@@ -25,10 +25,9 @@
  function makePhotoMarkup(){
    var path=photoPath.value.trim(),alt=photoAlt.value.trim(),caption=photoCaption.value.trim();
    if(!path){photoStatus.textContent="Enter an image path or direct image URL first.";photoMarkup.value="";return false;}
-   if(/[\\s()]/.test(path)&&!/^https?:\\/\\//i.test(path)){photoStatus.textContent="Use a simple filename without spaces or parentheses, such as media/orion-nebula.jpg.";return false;}
-   var md="!["+alt.replace(/\\]/g,"\\\\]")+"]("+path.replace(/\\)/g,"%29")+" )";
-   md=md.replace(/ \\)$/,")");
-   if(caption)md+="\\n\\n*"+caption.replace(/\\*/g,"\\\\*")+"*";
+   if(/[\s()]/.test(path)&&!/^https?:\/\//i.test(path)){photoStatus.textContent="Use a simple filename without spaces or parentheses, such as media/orion-nebula.jpg.";return false;}
+   var md="!["+alt.replace(/\]/g,"\\]")+"]("+path.replace(/\)/g,"%29")+")";
+   if(caption)md+="\n\n*"+caption.replace(/\*/g,"\\*")+"*";
    photoMarkup.value=md;photoStatus.textContent="Markup created. Tap Copy markup, then paste it into the chapter text.";return true;
  }
  document.getElementById("make-photo-markup").addEventListener("click",makePhotoMarkup);
