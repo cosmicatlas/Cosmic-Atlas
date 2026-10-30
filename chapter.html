@@ -27,7 +27,7 @@
 <p id="photo-helper-status" class="meta" role="status" aria-live="polite"></p>
 </section>
 </article></main><footer id="foot"></footer>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script src="data.js"></script><script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script><script src="data.js"></script><script src="app.js"></script><script src="supabase-config.js"></script>
 <script>
 (function(){
  var n=Number(new URLSearchParams(location.search).get("number"))||2;
@@ -66,7 +66,7 @@
  }
  cosmicSlider.addEventListener("input",updateCosmicTime);updateCosmicTime();
  function safe(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
- fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()}).then(function(items){
+ function loadChapterData(){var cfg=window.COSMIC_SUPABASE_URL&&window.COSMIC_SUPABASE_KEY;if(!cfg)return Promise.reject(Error("no db"));return fetch(window.COSMIC_SUPABASE_URL+"/rest/v1/chapters?number=eq."+encodeURIComponent(n)+"&select=number,title,summary,body,reference_notes",{headers:{apikey:window.COSMIC_SUPABASE_KEY}}).then(function(r){if(!r.ok)throw Error("db");return r.json()}).then(function(rows){if(rows&&rows.length)return [{number:rows[0].number,title:rows[0].title,summary:rows[0].summary,body:rows[0].body,references:rows[0].reference_notes}];throw Error("not published");});}loadChapterData().catch(function(){return fetch("content/chapters.json").then(function(r){if(!r.ok)throw Error("load");return r.json()});}).then(function(items){
    var c=items.find(function(x){return Number(x.number)===n});
    if(!c){document.getElementById("chapter-title").textContent="Chapter not found";document.getElementById("chapter-body").textContent="This chapter has not been created yet.";return;}
    document.title="Chapter "+Number(c.number)+": "+String(c.title||"Untitled")+" | Cosmic Atlas";
