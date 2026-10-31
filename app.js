@@ -3,9 +3,9 @@
 var path = window.location.pathname;
 var isHome = /(?:^|\/)index\.html$/.test(path) || /\/Cosmic-Atlas\/$/.test(path) || path === "/";
 var introSeen = false;
-try { introSeen = localStorage.getItem("cosmic-atlas-intro-seen") === "1"; } catch(e) {}
+try { introSeen = localStorage.getItem("cosmic-atlas-intro-seen-v2") === "1"; } catch(e) {}
 if (isHome && !introSeen) {
- try { localStorage.setItem("cosmic-atlas-intro-seen","1"); } catch(e) {}
+ try { localStorage.setItem("cosmic-atlas-intro-seen-v2","1"); } catch(e) {}
  // Cinematic Cosmic Atlas launch sequence
  var intro=document.createElement("div");
   intro.className="atlas-intro atlas-cinematic";
