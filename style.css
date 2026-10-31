@@ -322,3 +322,41 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
   html[data-theme="light"] body,
   html[data-theme="light"] body::before{animation:none!important}
 }
+
+
+/* Fast, distinct micro-interactions for everyday actions */
+@keyframes atlas-action-pop {
+  0% { transform:scale(1); filter:brightness(1); }
+  38% { transform:scale(.965); filter:brightness(1.12); }
+  100% { transform:scale(1); filter:brightness(1); }
+}
+@keyframes atlas-action-glint {
+  0% { box-shadow:0 0 0 0 #7fd0e000; }
+  45% { box-shadow:0 0 0 4px #7fd0e033; }
+  100% { box-shadow:0 0 0 0 #7fd0e000; }
+}
+@keyframes atlas-content-arrive {
+  from { opacity:0; transform:translateY(7px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@media(prefers-reduced-motion:no-preference) {
+  .atlas-action-pop { animation:atlas-action-pop .32s ease-out; }
+  .atlas-action-glint { animation:atlas-action-glint .42s ease-out; }
+  button:active, .btn:active, #mb:active, #theme-toggle:active {
+    transform:scale(.97);
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px #7fd0e022;
+    transition:border-color .18s ease,box-shadow .18s ease;
+  }
+  details[open] > :not(summary) {
+    animation:atlas-content-arrive .28s ease-out both;
+  }
+  .community-card:active, .pn a:active {
+    transform:scale(.99);
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .atlas-action-pop,.atlas-action-glint { animation:none!important; }
+}
