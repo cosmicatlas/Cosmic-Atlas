@@ -394,15 +394,7 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
   font: .78rem system-ui,sans-serif;letter-spacing:.12em;color:#b9cbed;
   animation:mini-title-in .42s .2s both;
 }
-.atlas-intro.atlas-cinematic .cinema-nebula,
-.atlas-intro.atlas-cinematic .cinema-stars,
-.atlas-intro.atlas-cinematic .cinema-streaks,
-.atlas-intro.atlas-cinematic .cinema-sun,
-.atlas-intro.atlas-cinematic .cinema-planet-wrap,
-.atlas-intro.atlas-cinematic .cinema-flare,
-.atlas-intro.atlas-cinematic .cinema-copy,
-.atlas-intro.atlas-cinematic .cinema-progress,
-.atlas-intro.atlas-cinematic .intro-skip{display:none!important}
+/* The homepage now uses the full cinematic launch sequence. */
 html[data-theme="light"] .atlas-intro.atlas-cinematic{
   background:radial-gradient(ellipse at 50% 45%,#fff8e8 0%,#e8f2ff 58%,#d9e4fa 100%);
 }
