@@ -98,32 +98,48 @@ document.querySelectorAll("[data-planet]").forEach(function(button){
   var stage=document.querySelector(".solar-stage");if(stage){stage.setAttribute("data-selected",button.getAttribute("data-planet").toLowerCase())}
  });
 });
-/* NASA public image-library search. Uses the NASA Images and Video Library API. */
+/* NASA public image-library search. Uses NASA's public Images and Video Library API. */
 var nasaForm=document.getElementById("nasa-search-form");
 if(nasaForm){
- var nasaInput=document.getElementById("nasa-query"),nasaStatus=document.getElementById("nasa-status"),nasaResults=document.getElementById("nasa-results"),nasaBusy=false;
+ var nasaInput=document.getElementById("nasa-query"),nasaStatus=document.getElementById("nasa-status"),nasaResults=document.getElementById("nasa-results"),nasaBusy=false,nasaRequest=0;
  function nasaEscape(value){return String(value||"").replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]})}
+ function nasaImageFor(item){
+  var links=item&&item.links||[];
+  var preview=links.find(function(l){return l.href&&(l.render==="image"||l.rel==="preview")&&/^https?:/i.test(l.href)});
+  if(preview)return Promise.resolve(preview.href);
+  if(!item||!item.href)return Promise.resolve("");
+  return fetch(item.href).then(function(r){if(!r.ok)throw new Error("Asset list unavailable");return r.json()})
+   .then(function(files){if(!Array.isArray(files))return "";return files.find(function(u){return typeof u==="string"&&/\.(jpe?g|png|webp)(\?|$)/i.test(u)&&!/_thumb\./i.test(u)})||files.find(function(u){return typeof u==="string"&&/\.(jpe?g|png|webp)(\?|$)/i.test(u)})||""})
+   .catch(function(){return ""});
+ }
  function searchNasa(query){
-  if(nasaBusy)return;nasaBusy=true;nasaStatus.textContent="Searching NASA's image library…";nasaResults.innerHTML="";
-  fetch("https://images-api.nasa.gov/search?q="+encodeURIComponent(query)+"&media_type=image&page_size=12")
+  if(!query)return;
+  var requestId=++nasaRequest;nasaBusy=true;nasaStatus.textContent="Searching NASA's image library…";nasaResults.innerHTML="";
+  fetch("https://images-api.nasa.gov/search?q="+encodeURIComponent(query)+"&media_type=image")
    .then(function(response){if(!response.ok)throw new Error("NASA library request failed");return response.json()})
    .then(function(data){
     var items=data&&data.collection&&data.collection.items||[];
-    if(!items.length){nasaStatus.textContent="No images found for “"+query+"”. Try another search term.";return}
+    if(!items.length){nasaStatus.textContent="No images found for “"+query+"”. Try another search term.";return []}
+    return Promise.all(items.slice(0,18).map(function(item){return nasaImageFor(item).then(function(image){return {item:item,image:image}})}));
+   })
+   .then(function(results){
+    if(requestId!==nasaRequest)return;
+    if(!results)return;
     var html="",count=0;
-    items.forEach(function(item){
-     if(count>=9)return;
-     var d=item.data&&item.data[0]||{},links=item.links||[],image=links.find(function(l){return l.render==="image"&&l.href})||links.find(function(l){return l.href&&/~large|~medium|~orig/.test(l.href)})||links.find(function(l){return l.href});
-     if(!image||!image.href)return;
-     var title=nasaEscape(d.title||"NASA image"),desc=nasaEscape((d.description||"No description supplied.").replace(/<[^>]*>/g," ").replace(/\s+/g," ").slice(0,220)),date=nasaEscape(d.date_created?d.date_created.slice(0,10):"Date unavailable"),href=nasaEscape(image.href),nasaId=nasaEscape(d.nasa_id||"NASA collection item");
-     html+='<article class="nasa-card"><a class="nasa-image-link" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Open image: '+title+'"><img loading="lazy" src="'+href+'" alt="'+title+'" onerror="this.closest(\'.nasa-card\').remove()"></a><div class="nasa-card-copy"><h3>'+title+'</h3><p>'+desc+'</p><small>'+date+' · '+nasaId+'</small><a class="text-link" href="https://images.nasa.gov/details/'+nasaId+'" target="_blank" rel="noopener noreferrer">View NASA details ↗</a></div></article>';count++;
+    results.forEach(function(result){
+     if(count>=9||!result.image)return;
+     var item=result.item,d=item.data&&item.data[0]||{};
+     var title=nasaEscape(d.title||"NASA image"),desc=nasaEscape((d.description||"No description supplied.").replace(/<[^>]*>/g," ").replace(/\s+/g," ").slice(0,220)),date=nasaEscape(d.date_created?d.date_created.slice(0,10):"Date unavailable"),href=nasaEscape(result.image),nasaId=nasaEscape(d.nasa_id||"");
+     var details=nasaId?"https://images.nasa.gov/details/"+encodeURIComponent(d.nasa_id):"https://images.nasa.gov/";
+     html+='<article class="nasa-card"><a class="nasa-image-link" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Open image: '+title+'"><img loading="lazy" src="'+href+'" alt="'+title+'"></a><div class="nasa-card-copy"><h3>'+title+'</h3><p>'+desc+'</p><small>'+date+(nasaId?" · "+nasaId:"")+'</small><a class="text-link" href="'+details+'" target="_blank" rel="noopener noreferrer">View NASA details ↗</a></div></article>';count++;
     });
     nasaResults.innerHTML=html;
-    nasaStatus.textContent=count?("Showing "+count+" NASA image results for “"+query+"”. Select an image or open its NASA details."):("No displayable images found for “"+query+"”. Try another search.");
-   }).catch(function(){nasaStatus.textContent="NASA's image service could not be reached. Check your internet connection and try again.";})
-   .finally(function(){nasaBusy=false});
+    nasaStatus.textContent=count?("Showing "+count+" NASA image results for “"+query+"”. Select an image or open its NASA details."):"NASA returned results, but no preview images were available. Try another search.";
+   })
+   .catch(function(){if(requestId===nasaRequest)nasaStatus.textContent="NASA's image service could not be reached. Check your internet connection and try again."})
+   .finally(function(){if(requestId===nasaRequest)nasaBusy=false});
  }
- nasaForm.addEventListener("submit",function(event){event.preventDefault();var query=nasaInput.value.trim();if(query)searchNasa(query)});
+ nasaForm.addEventListener("submit",function(event){event.preventDefault();searchNasa(nasaInput.value.trim())});
  document.querySelectorAll("[data-nasa-query]").forEach(function(button){button.addEventListener("click",function(){nasaInput.value=button.getAttribute("data-nasa-query");searchNasa(nasaInput.value)})});
  searchNasa(nasaInput.value.trim()||"Orion Nebula");
 }
