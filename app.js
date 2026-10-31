@@ -1,10 +1,11 @@
 (function(){
-// Play the cinematic intro only once per browser, on the homepage.
-var isHome = /(?:^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname.endsWith("/") ;
+// Play the cinematic intro only on the homepage, once per browser.
+var path = window.location.pathname;
+var isHome = /(?:^|\/)index\.html$/.test(path) || /\/Cosmic-Atlas\/$/.test(path) || path === "/";
 var introSeen = false;
-try { introSeen = sessionStorage.getItem("cosmic-atlas-intro-seen") === "1"; } catch(e) {}
+try { introSeen = localStorage.getItem("cosmic-atlas-intro-seen") === "1"; } catch(e) {}
 if (isHome && !introSeen) {
- try { sessionStorage.setItem("cosmic-atlas-intro-seen","1"); } catch(e) {}
+ try { localStorage.setItem("cosmic-atlas-intro-seen","1"); } catch(e) {}
  // Cinematic Cosmic Atlas launch sequence
  var intro=document.createElement("div");
   intro.className="atlas-intro atlas-cinematic";
