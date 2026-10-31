@@ -360,3 +360,60 @@ html[data-theme="light"] .atlas-cinematic .intro-skip{color:#344967;background:#
 @media(prefers-reduced-motion:reduce) {
   .atlas-action-pop,.atlas-action-glint { animation:none!important; }
 }
+
+
+/* Compact 1.25-second Cosmic Atlas opening */
+.atlas-intro.atlas-cinematic{
+  background:radial-gradient(ellipse at 50% 45%,#182654 0%,#090e20 58%,#03050d 100%);
+  perspective:none;
+  transition:opacity .28s ease,visibility .28s ease;
+}
+.atlas-intro.atlas-cinematic:before{animation:none;inset:0;opacity:.55}
+.mini-opening-orbit{
+  position:absolute;top:calc(50% - 66px);left:50%;width:46px;height:46px;
+  transform:translateX(-50%);border:1px solid #9bdcffaa;border-radius:50%;
+  animation:mini-orbit-in .65s cubic-bezier(.2,.8,.2,1) both;
+}
+.mini-opening-orbit:before{
+  content:"";position:absolute;inset:7px;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,#fff2bd,#8e9fe8 38%,#354779 75%);
+  box-shadow:0 0 18px #7fd0e066;
+}
+.mini-opening-orbit span{
+  position:absolute;left:-5px;top:17px;width:54px;height:12px;
+  border:1px solid #f3c77a;border-radius:50%;transform:rotate(-24deg);
+}
+.mini-opening-title{
+  position:absolute;top:calc(50% - 7px);width:100%;text-align:center;
+  font:800 clamp(1.35rem,6vw,1.8rem)/1.2 system-ui,sans-serif;
+  letter-spacing:.12em;color:#f4f5ff;animation:mini-title-in .48s .12s both;
+}
+.mini-opening-title b{color:#f3c77a}
+.mini-opening-sub{
+  position:absolute;top:calc(50% + 29px);width:100%;text-align:center;
+  font: .78rem system-ui,sans-serif;letter-spacing:.12em;color:#b9cbed;
+  animation:mini-title-in .42s .2s both;
+}
+.atlas-intro.atlas-cinematic .cinema-nebula,
+.atlas-intro.atlas-cinematic .cinema-stars,
+.atlas-intro.atlas-cinematic .cinema-streaks,
+.atlas-intro.atlas-cinematic .cinema-sun,
+.atlas-intro.atlas-cinematic .cinema-planet-wrap,
+.atlas-intro.atlas-cinematic .cinema-flare,
+.atlas-intro.atlas-cinematic .cinema-copy,
+.atlas-intro.atlas-cinematic .cinema-progress,
+.atlas-intro.atlas-cinematic .intro-skip{display:none!important}
+html[data-theme="light"] .atlas-intro.atlas-cinematic{
+  background:radial-gradient(ellipse at 50% 45%,#fff8e8 0%,#e8f2ff 58%,#d9e4fa 100%);
+}
+html[data-theme="light"] .mini-opening-title{color:#263b5e}
+html[data-theme="light"] .mini-opening-sub{color:#63799a}
+@keyframes mini-orbit-in{
+  from{opacity:0;transform:translateX(-50%) scale(.55) rotate(-30deg)}
+  to{opacity:1;transform:translateX(-50%) scale(1) rotate(0)}
+}
+@keyframes mini-title-in{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){.atlas-intro.atlas-cinematic{display:none}}
