@@ -76,6 +76,57 @@ if(cosmicSlider){
  }
  cosmicSlider.addEventListener("input",updateCosmicTimeline);updateCosmicTimeline();
 }
+/* Interactive solar-system planet cards */
+var planetData={
+ Mercury:{type:"Terrestrial planet",year:"88 Earth days",fact:"The smallest planet and the closest to the Sun. Its heavily cratered surface records a long history of impacts."},
+ Venus:{type:"Terrestrial planet",year:"225 Earth days",fact:"A thick carbon-dioxide atmosphere traps heat, making Venus the hottest planet in our solar system."},
+ Earth:{type:"Terrestrial planet",year:"365.25 Earth days",fact:"Our home world has liquid water on its surface and, so far, is the only world known to host life."},
+ Mars:{type:"Terrestrial planet",year:"687 Earth days",fact:"A cold desert world with ancient river-like features, giant volcanoes, and evidence that liquid water once flowed on its surface."},
+ Jupiter:{type:"Gas giant",year:"11.86 Earth years",fact:"The largest planet. Jupiter's atmosphere hosts powerful storms, including the long-lived Great Red Spot."},
+ Saturn:{type:"Gas giant",year:"29.4 Earth years",fact:"Saturn's spectacular rings are made mostly of countless pieces of water ice and rocky debris."},
+ Uranus:{type:"Ice giant",year:"84 Earth years",fact:"An ice giant that rotates almost on its side, giving it extreme seasonal patterns."},
+ Neptune:{type:"Ice giant",year:"164.8 Earth years",fact:"A distant, cold ice giant with supersonic winds and a deep blue atmosphere."}
+};
+document.querySelectorAll("[data-planet]").forEach(function(button){
+ button.addEventListener("click",function(){
+  var p=planetData[button.getAttribute("data-planet")];if(!p)return;
+  document.getElementById("solar-name").textContent=button.getAttribute("data-planet");
+  document.getElementById("solar-fact").textContent=p.fact;
+  document.getElementById("solar-type").textContent=p.type;
+  document.getElementById("solar-year").textContent=p.year;
+  document.querySelectorAll("[data-planet]").forEach(function(b){b.setAttribute("aria-pressed",String(b===button))});
+  var stage=document.querySelector(".solar-stage");if(stage){stage.setAttribute("data-selected",button.getAttribute("data-planet").toLowerCase())}
+ });
+});
+/* NASA public image-library search. Uses the NASA Images and Video Library API. */
+var nasaForm=document.getElementById("nasa-search-form");
+if(nasaForm){
+ var nasaInput=document.getElementById("nasa-query"),nasaStatus=document.getElementById("nasa-status"),nasaResults=document.getElementById("nasa-results"),nasaBusy=false;
+ function nasaEscape(value){return String(value||"").replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]})}
+ function searchNasa(query){
+  if(nasaBusy)return;nasaBusy=true;nasaStatus.textContent="Searching NASA's image library…";nasaResults.innerHTML="";
+  fetch("https://images-api.nasa.gov/search?q="+encodeURIComponent(query)+"&media_type=image&page_size=12")
+   .then(function(response){if(!response.ok)throw new Error("NASA library request failed");return response.json()})
+   .then(function(data){
+    var items=data&&data.collection&&data.collection.items||[];
+    if(!items.length){nasaStatus.textContent="No images found for “"+query+"”. Try another search term.";return}
+    var html="",count=0;
+    items.forEach(function(item){
+     if(count>=9)return;
+     var d=item.data&&item.data[0]||{},links=item.links||[],image=links.find(function(l){return l.render==="image"&&l.href})||links.find(function(l){return l.href&&/~large|~medium|~orig/.test(l.href)})||links.find(function(l){return l.href});
+     if(!image||!image.href)return;
+     var title=nasaEscape(d.title||"NASA image"),desc=nasaEscape((d.description||"No description supplied.").replace(/<[^>]*>/g," ").replace(/\s+/g," ").slice(0,220)),date=nasaEscape(d.date_created?d.date_created.slice(0,10):"Date unavailable"),href=nasaEscape(image.href),nasaId=nasaEscape(d.nasa_id||"NASA collection item");
+     html+='<article class="nasa-card"><a class="nasa-image-link" href="'+href+'" target="_blank" rel="noopener noreferrer" aria-label="Open image: '+title+'"><img loading="lazy" src="'+href+'" alt="'+title+'" onerror="this.closest(\'.nasa-card\').remove()"></a><div class="nasa-card-copy"><h3>'+title+'</h3><p>'+desc+'</p><small>'+date+' · '+nasaId+'</small><a class="text-link" href="https://images.nasa.gov/details/'+nasaId+'" target="_blank" rel="noopener noreferrer">View NASA details ↗</a></div></article>';count++;
+    });
+    nasaResults.innerHTML=html;
+    nasaStatus.textContent=count?("Showing "+count+" NASA image results for “"+query+"”. Select an image or open its NASA details."):("No displayable images found for “"+query+"”. Try another search.");
+   }).catch(function(){nasaStatus.textContent="NASA's image service could not be reached. Check your internet connection and try again.";})
+   .finally(function(){nasaBusy=false});
+ }
+ nasaForm.addEventListener("submit",function(event){event.preventDefault();var query=nasaInput.value.trim();if(query)searchNasa(query)});
+ document.querySelectorAll("[data-nasa-query]").forEach(function(button){button.addEventListener("click",function(){nasaInput.value=button.getAttribute("data-nasa-query");searchNasa(nasaInput.value)})});
+ searchNasa(nasaInput.value.trim()||"Orion Nebula");
+}
 /* Brief feedback when people interact with controls */
 document.addEventListener("click", function(event) {
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
