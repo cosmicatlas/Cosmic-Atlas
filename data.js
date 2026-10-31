@@ -8,7 +8,7 @@ var CH=[[0,1,"What Can We Know About the Beginning?"],[0,2,"The Big Bang"],[0,3,
 [4,21,"The Formation of the Solar System"],[4,22,"Exoplanets and Planetary Systems"],[4,23,"Planetary Atmospheres and Habitability"],[4,24,"Astrobiology and the Search for Life"],
 [5,25,"General Relativity and Cosmic Expansion"],[5,26,"Dark Energy and Accelerated Expansion"],[5,27,"The Observable Universe and Its Limits"],[5,28,"Possible Futures of the Universe"],[5,29,"Unsolved Problems in Cosmology"]];
 /* Leave empty until a chapter is ready to publish. Add a chapter here only when it is written and checked. */
-// Example: var LIVE={2:{file:"big-bang.html",sum:"A short summary written by you."}};
+// Example: var LIVE={1:{file:"chapter.html?number=1",sum:"How observations reveal the universe’s history—and where our knowledge reaches its limits."},2:{file:"chapter.html?number=2",sum:"The expanding universe, the evidence for the Big Bang, and the early cosmic timeline."},3:{file:"chapter.html?number=3",sum:"Why the earliest moments challenge our theories of gravity and quantum physics."}};
 var LIVE={1:{file:"chapter.html?number=1",sum:"How observations reveal the universe’s history—and where our knowledge reaches its limits."},2:{file:"chapter.html?number=2",sum:"The expanding universe, the evidence for the Big Bang, and the early cosmic timeline."},3:{file:"chapter.html?number=3",sum:"Why the earliest moments challenge our theories of gravity and quantum physics."}};
 /* Add your own glossary terms as [term, your definition, chapter number or 0]. */
 var GLOSSARY=[];
