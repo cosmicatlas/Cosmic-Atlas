@@ -57,6 +57,25 @@ var cs=document.getElementById("cats");if(cs){var ok=SITE.user!=="YOUR-GITHUB-US
 if(!ok)document.getElementById("setup").style.display="block";
 document.querySelectorAll("[data-gh]").forEach(function(a){a.href=ok?base+a.dataset.gh:"#setup"});
 var c="";CATS.forEach(function(x){c+='<div class="card"><h3><a href="'+(ok?base+"/discussions/categories/"+x[1]:"#setup")+'">'+esc(x[0])+"</a></h3><p>"+esc(x[2])+"</p></div>"});cs.innerHTML=c}
+/* Interactive cosmic-history timeline */
+var cosmicSlider=document.getElementById("cosmic-time-slider");
+if(cosmicSlider){
+ var cosmicStages=[
+  {at:0,title:"The Big Bang",age:"13.8 billion years ago",desc:"The universe began in an extremely hot, dense state and has been expanding ever since."},
+  {at:25,title:"The first atoms",age:"about 380,000 years after the beginning",desc:"As the universe cooled, electrons joined nuclei to form mostly hydrogen and helium atoms. The cosmic microwave background was released."},
+  {at:50,title:"The first stars",age:"within the first few hundred million years",desc:"Gravity gathered gas into the first stars. Their light began transforming the dark early universe."},
+  {at:75,title:"Galaxies take shape",age:"over billions of years",desc:"Stars gathered into galaxies, which grew and changed as gravity shaped the large-scale cosmic web."},
+  {at:100,title:"The universe today",age:"13.8 billion years after the beginning",desc:"The universe continues to expand. Stars and planets form, and observers on Earth study the cosmos while many questions remain open."}
+ ];
+ function updateCosmicTimeline(){
+  var value=Number(cosmicSlider.value),stage=cosmicStages[0];
+  for(var j=0;j<cosmicStages.length;j++){if(value>=cosmicStages[j].at)stage=cosmicStages[j]}
+  var title=document.getElementById("cosmic-era-title"),age=document.getElementById("cosmic-era-age"),desc=document.getElementById("cosmic-era-description"),fill=document.getElementById("cosmic-track-fill");
+  if(title)title.textContent=stage.title;if(age)age.textContent=stage.age;if(desc)desc.textContent=stage.desc;if(fill)fill.style.width=value+"%";
+  cosmicSlider.setAttribute("aria-valuetext",stage.title+", "+stage.age);
+ }
+ cosmicSlider.addEventListener("input",updateCosmicTimeline);updateCosmicTimeline();
+}
 /* Brief feedback when people interact with controls */
 document.addEventListener("click", function(event) {
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
