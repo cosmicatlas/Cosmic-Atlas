@@ -1,17 +1,24 @@
 (function(){
-// Cinematic Cosmic Atlas launch sequence
-var intro=document.createElement("div");
- intro.className="atlas-intro atlas-cinematic";
- intro.setAttribute("role","status");
- intro.setAttribute("aria-label","Cosmic Atlas is launching");
- intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars"></div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><span class="planet-cloud"></span></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button">Skip intro</button>';
- document.body.appendChild(intro);
- var starLayer=intro.querySelector(".cinema-stars");
- var mobileIntro=window.matchMedia('(max-width: 700px)').matches; for(var si=0;si<(mobileIntro?22:64);si++){var star=document.createElement("i");star.className="cinema-star";star.style.setProperty("--x",(Math.random()*100)+"%");star.style.setProperty("--y",(Math.random()*100)+"%");star.style.setProperty("--d",(1+Math.random()*2.5)+"px");star.style.setProperty("--delay",(Math.random()*2)+"s");starLayer.appendChild(star);}
- var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},900)};
- var introTimer=window.setTimeout(finishIntro,5700);
- intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);finishIntro()});
-
+// Play the cinematic intro only once per browser, on the homepage.
+var isHome = /(?:^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname.endsWith("/") ;
+var introSeen = false;
+try { introSeen = sessionStorage.getItem("cosmic-atlas-intro-seen") === "1"; } catch(e) {}
+if (isHome && !introSeen) {
+ try { sessionStorage.setItem("cosmic-atlas-intro-seen","1"); } catch(e) {}
+ // Cinematic Cosmic Atlas launch sequence
+ var intro=document.createElement("div");
+  intro.className="atlas-intro atlas-cinematic";
+  intro.setAttribute("role","status");
+  intro.setAttribute("aria-label","Cosmic Atlas is launching");
+  intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars"></div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><span class="planet-cloud"></span></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button">Skip intro</button>';
+  document.body.appendChild(intro);
+  var starLayer=intro.querySelector(".cinema-stars");
+  var mobileIntro=window.matchMedia('(max-width: 700px)').matches; for(var si=0;si<(mobileIntro?22:64);si++){var star=document.createElement("i");star.className="cinema-star";star.style.setProperty("--x",(Math.random()*100)+"%");star.style.setProperty("--y",(Math.random()*100)+"%");star.style.setProperty("--d",(1+Math.random()*2.5)+"px");star.style.setProperty("--delay",(Math.random()*2)+"s");starLayer.appendChild(star);}
+  var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},900)};
+  var introTimer=window.setTimeout(finishIntro,5700);
+  intro.querySelector(".intro-skip").addEventListener("click",function(){window.clearTimeout(introTimer);finishIntro()});
+ 
+}
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
