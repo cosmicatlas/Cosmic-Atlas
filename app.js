@@ -60,4 +60,17 @@ var cs=document.getElementById("cats");if(cs){var ok=SITE.user!=="YOUR-GITHUB-US
 if(!ok)document.getElementById("setup").style.display="block";
 document.querySelectorAll("[data-gh]").forEach(function(a){a.href=ok?base+a.dataset.gh:"#setup"});
 var c="";CATS.forEach(function(x){c+='<div class="card"><h3><a href="'+(ok?base+"/discussions/categories/"+x[1]:"#setup")+'">'+esc(x[0])+"</a></h3><p>"+esc(x[2])+"</p></div>"});cs.innerHTML=c}
+/* Brief feedback when people interact with controls */
+document.addEventListener("click", function(event) {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var target = event.target && event.target.closest
+    ? event.target.closest("button, .btn, #theme-toggle, #mb, .community-card, .pn a, #parts summary, details.qa summary, .tag-option")
+    : null;
+  if (!target) return;
+  target.classList.remove("atlas-action-pop");
+  void target.offsetWidth;
+  target.classList.add("atlas-action-pop");
+  window.setTimeout(function() { target.classList.remove("atlas-action-pop"); }, 380);
+}, true);
+
 })();
