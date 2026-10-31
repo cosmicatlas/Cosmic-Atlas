@@ -499,7 +499,7 @@ html[data-theme="light"] .mini-opening-sub{color:#63799a}
 .solar-orbit{position:absolute;left:50%;top:50%;border:1px solid #9caed02b;border-radius:50%;transform:translate(-50%,-50%)}
 /* Planets travel around the Sun at different orbital speeds; inner worlds move faster. */
 .solar-orbit{animation:solar-revolution var(--orbit-duration,60s) linear infinite;will-change:transform}
-.mercury-orbit{--orbit-duration:4s}.venus-orbit{--orbit-duration:7s}.earth-orbit{--orbit-duration:10s}.mars-orbit{--orbit-duration:19s}.jupiter-orbit{--orbit-duration:40s}.saturn-orbit{--orbit-duration:55s}.uranus-orbit{--orbit-duration:70s}.neptune-orbit{--orbit-duration:85s}
+.mercury-orbit{--orbit-duration:7600522s}.venus-orbit{--orbit-duration:19414166s}.earth-orbit{--orbit-duration:31558118s}.mars-orbit{--orbit-duration:59355072s}.jupiter-orbit{--orbit-duration:374335776s}.saturn-orbit{--orbit-duration:929596608s}.uranus-orbit{--orbit-duration:2651486400s}.neptune-orbit{--orbit-duration:5199724800s}
 @keyframes solar-revolution{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 .solar-orbit .planet{position:absolute;left:50%;top:0;display:block;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 9px #ffffff44}
 .mercury-orbit{width:60px;height:60px}.venus-orbit{width:88px;height:88px}.earth-orbit{width:120px;height:120px}.mars-orbit{width:153px;height:153px}.jupiter-orbit{width:200px;height:200px}.saturn-orbit{width:248px;height:248px}.uranus-orbit{width:290px;height:290px}.neptune-orbit{width:332px;height:332px}
