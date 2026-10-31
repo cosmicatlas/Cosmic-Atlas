@@ -4,9 +4,8 @@ var path = window.location.pathname;
 var isHome = /(?:^|\/)index\.html$/.test(path) || /\/Cosmic-Atlas\/$/.test(path) || path === "/";
 var introSeen = false;
 try { introSeen = localStorage.getItem("cosmic-atlas-intro-seen-v2") === "1"; } catch(e) {}
-if (isHome && !introSeen) {
- try { localStorage.setItem("cosmic-atlas-intro-seen-v2","1"); } catch(e) {}
- // Cinematic Cosmic Atlas launch sequence
+if (isHome) {
+ // Compact Cosmic Atlas launch sequence; show on each homepage load so stale browser storage cannot suppress it.
  var intro=document.createElement("div");
   intro.className="atlas-intro atlas-cinematic";
   intro.setAttribute("role","status");
