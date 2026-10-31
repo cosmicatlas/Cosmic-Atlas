@@ -10,10 +10,16 @@ if (isHome) {
   intro.className="atlas-intro atlas-cinematic";
   intro.setAttribute("role","status");
   intro.setAttribute("aria-label","Cosmic Atlas is launching");
-  intro.innerHTML='<div class="mini-opening-orbit"><span></span></div><div class="mini-opening-title">COSMIC <b>ATLAS</b></div><div class="mini-opening-sub">Explore the universe</div>';
+  var stars="";
+  for(var si=0;si<72;si++){
+   var sx=((si*47+13)%997)/10,sy=((si*71+29)%991)/10,sd=(si%9===0?3:si%3===0?2:1);
+   stars+='<i class="cinema-star" style="--x:'+sx+'%;--y:'+sy+'%;--d:'+sd+'px;--delay:-'+((si%18)/10)+'s"></i>';
+  }
+  intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars">'+stars+'</div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><div class="planet-cloud"></div></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE AND TIME</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button">Skip intro</button>';
   document.body.appendChild(intro);
-  var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},320)};
-  window.setTimeout(finishIntro,2000);
+  var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},850)};
+  intro.querySelector(".intro-skip").addEventListener("click",finishIntro);
+  window.setTimeout(finishIntro,5600);
  
 }
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
