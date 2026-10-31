@@ -489,3 +489,49 @@ html[data-theme="light"] .mini-opening-sub{color:#63799a}
 @media(max-width:700px){.cosmic-hero{grid-template-columns:1fr;gap:0;padding-top:1.2rem;min-height:0}.hero-copy{padding:.8rem .2rem 0}.hero-visual{height:290px;grid-row:2}.hero-bottomline{bottom:.4rem}.cosmic-stats{gap:.5rem}.cosmic-stat{padding:.8rem .65rem}.cosmic-stat span{font-size:.75rem}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:170px}.plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section-heading{display:block}.section-heading>p{margin-top:.6rem}.community-banner{align-items:flex-start;flex-direction:column}.hero-copy h1{font-size:clamp(3.3rem,16vw,5rem)}}
 @media(max-width:390px){.cosmic-stats{grid-template-columns:1fr}.cosmic-stat{display:flex;align-items:center;justify-content:space-between;gap:.7rem}.cosmic-stat span{text-align:right;max-width:58%}.plan-grid{grid-template-columns:1fr}.cosmic-milestones{font-size:.58rem}.hero-visual{height:250px}}
 @media(prefers-reduced-motion:reduce){.nebula,.hero-planet,.planet-ring,.planet-orbit{animation:none!important}.feature-card{transition:none}}
+
+
+/* Interactive solar system */
+.solar-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:1rem;align-items:stretch}
+.solar-stage{position:relative;min-height:370px;display:grid;place-items:center;overflow:hidden;border:1px solid #344064;border-radius:18px;background:radial-gradient(ellipse at center,#172044 0,#090d1c 65%,#050711 100%)}
+.solar-stage:before{content:"";position:absolute;inset:0;opacity:.55;background-image:radial-gradient(1px 1px at 20% 20%,#fff 99%,transparent),radial-gradient(1px 1px at 75% 35%,#c3b3ff 99%,transparent),radial-gradient(2px 2px at 35% 80%,#7fd0e0 99%,transparent);background-size:110px 120px,160px 150px,220px 200px}
+.sun-core{position:absolute;width:30px;height:30px;border-radius:50%;z-index:3;background:radial-gradient(circle at 30% 30%,#fff3bd,#ffba4a 45%,#ff712c 75%);box-shadow:0 0 20px #ffb34f,0 0 55px #ff8b2e88}
+.solar-orbit{position:absolute;left:50%;top:50%;border:1px solid #9caed02b;border-radius:50%;transform:translate(-50%,-50%)}
+.solar-orbit .planet{position:absolute;left:50%;top:0;display:block;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 9px #ffffff44}
+.mercury-orbit{width:60px;height:60px}.venus-orbit{width:88px;height:88px}.earth-orbit{width:120px;height:120px}.mars-orbit{width:153px;height:153px}.jupiter-orbit{width:200px;height:200px}.saturn-orbit{width:248px;height:248px}.uranus-orbit{width:290px;height:290px}.neptune-orbit{width:332px;height:332px}
+.mercury{width:5px;height:5px;background:#b7b3ae}.venus{width:7px;height:7px;background:#e3c28b}.earth{width:8px;height:8px;background:linear-gradient(130deg,#6bd6ff 0 35%,#4dba78 36% 58%,#1b4b8c 59%)}.mars{width:6px;height:6px;background:#d66c4e}.jupiter{width:15px;height:15px;background:repeating-linear-gradient(0deg,#d8ad83 0 2px,#a96d50 3px 4px)}.saturn{width:12px;height:12px;background:#e5d0a0}.uranus{width:9px;height:9px;background:#8ee1e8}.neptune{width:9px;height:9px;background:#4b75f4}
+.saturn-orbit .planet:after{content:"";position:absolute;left:50%;top:50%;width:21px;height:7px;border:2px solid #d7c8a1;border-radius:50%;transform:translate(-50%,-50%) rotate(-20deg)}
+.solar-notice{position:absolute;bottom:.7rem;left:0;right:0;text-align:center;font: .68rem system-ui,sans-serif;color:#8c9abd}
+.solar-info{padding:1.2rem;border:1px solid #344064;border-radius:18px;background:linear-gradient(145deg,#141b32,#090d1b)}
+.solar-info h3{font-size:2rem;margin:.3rem 0;color:#f3c77a}
+.solar-info>p:not(.eyebrow){color:#c3cee2;font: .95rem/1.65 system-ui,sans-serif;min-height:5rem}
+.solar-info dl{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1rem 0}
+.solar-info dl div{padding:.7rem;background:#ffffff07;border-radius:10px}
+.solar-info dt{font: .72rem system-ui,sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+.solar-info dd{margin:.3rem 0 0;font:600 .9rem/1.4 system-ui,sans-serif;color:var(--text)}
+.planet-picker,.nasa-quick-search{display:flex;flex-wrap:wrap;gap:.4rem}
+.planet-picker button,.nasa-quick-search button{font:600 .78rem system-ui,sans-serif;padding:.45rem .65rem;border:1px solid #52618b;border-radius:99px;background:#10172b;color:var(--text);cursor:pointer;min-height:36px}
+.planet-picker button[aria-pressed=true],.planet-picker button:hover,.nasa-quick-search button:hover{background:#d9c5ff;color:#11152a;border-color:#d9c5ff}
+.solar-stage[data-selected] .solar-orbit .planet{filter:saturate(.65);transition:filter .2s,box-shadow .2s}
+.solar-stage[data-selected=earth] .earth,.solar-stage[data-selected=mars] .mars,.solar-stage[data-selected=jupiter] .jupiter,.solar-stage[data-selected=saturn] .saturn,.solar-stage[data-selected=neptune] .neptune,.solar-stage[data-selected=uranus] .uranus,.solar-stage[data-selected=venus] .venus,.solar-stage[data-selected=mercury] .mercury{filter:saturate(1.5) brightness(1.25);box-shadow:0 0 12px #8fe3ffbb}
+.nasa-search{padding:1rem;border:1px solid #344064;border-radius:16px;background:linear-gradient(145deg,#121a31,#090d1b)}
+.nasa-search label{margin-top:0}
+.nasa-search-row{display:flex;align-items:stretch;gap:.5rem}
+.nasa-search-row input{min-width:0;margin:.25rem 0 .8rem}
+.nasa-search-row .btn{white-space:nowrap;margin:.25rem 0 .8rem;border:0;cursor:pointer}
+.nasa-quick-search{margin:.2rem 0 .3rem}
+.nasa-status{font: .9rem/1.5 system-ui,sans-serif;color:var(--cyan);min-height:1.5rem;margin:1rem 0}
+.nasa-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem}
+.nasa-card{overflow:hidden;border:1px solid #344064;border-radius:14px;background:linear-gradient(145deg,#141a30,#090d19);min-width:0}
+.nasa-image-link{display:block;overflow:hidden;background:#070a14;aspect-ratio:4/3}
+.nasa-image-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.nasa-image-link:hover img{transform:scale(1.04)}
+.nasa-card-copy{padding:.8rem}
+.nasa-card h3{font-size:1rem;line-height:1.35;margin:0 0 .5rem;color:#e9ecf6}
+.nasa-card p{font: .8rem/1.5 system-ui,sans-serif;color:var(--mute);margin:.4rem 0;overflow-wrap:anywhere}
+.nasa-card small{display:block;font: .68rem/1.5 system-ui,sans-serif;color:#8998ba;overflow-wrap:anywhere;margin:.5rem 0}
+.nasa-card .text-link{font-size:.75rem}
+.nasa-credit{font: .75rem/1.5 system-ui,sans-serif;color:var(--mute);margin-top:1rem}
+@media(max-width:760px){.solar-layout{grid-template-columns:1fr}.solar-stage{min-height:350px}.solar-info>p:not(.eyebrow){min-height:0}.nasa-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.solar-stage{min-height:310px}.neptune-orbit{width:292px;height:292px}.uranus-orbit{width:258px;height:258px}.saturn-orbit{width:224px;height:224px}.jupiter-orbit{width:185px;height:185px}.mars-orbit{width:150px;height:150px}.earth-orbit{width:118px;height:118px}.venus-orbit{width:87px;height:87px}.mercury-orbit{width:58px;height:58px}.nasa-results{grid-template-columns:1fr}.nasa-search-row{display:block}.nasa-search-row .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.nasa-image-link img{transition:none}}
