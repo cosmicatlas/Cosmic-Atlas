@@ -535,3 +535,13 @@ html[data-theme="light"] .mini-opening-sub{color:#63799a}
 @media(max-width:760px){.solar-layout{grid-template-columns:1fr}.solar-stage{min-height:350px}.solar-info>p:not(.eyebrow){min-height:0}.nasa-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:430px){.solar-stage{min-height:310px}.neptune-orbit{width:292px;height:292px}.uranus-orbit{width:258px;height:258px}.saturn-orbit{width:224px;height:224px}.jupiter-orbit{width:185px;height:185px}.mars-orbit{width:150px;height:150px}.earth-orbit{width:118px;height:118px}.venus-orbit{width:87px;height:87px}.mercury-orbit{width:58px;height:58px}.nasa-results{grid-template-columns:1fr}.nasa-search-row{display:block}.nasa-search-row .btn{width:100%}}
 @media(prefers-reduced-motion:reduce){.nasa-image-link img{transition:none}}
+
+
+/* Main navigation menu */
+#mb{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;cursor:pointer}
+#mb[aria-expanded="true"]{border-color:var(--cyan);color:var(--cyan)}
+.site-menu-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem;margin:.2rem 0 1rem;padding:.8rem;border:1px solid #344064;border-radius:12px;background:radial-gradient(ellipse at 100% 0%,#293b7055,transparent 60%),#0c1122}
+.site-menu-links a{display:flex;align-items:center;min-height:44px;padding:.55rem .7rem;border:1px solid #344064;border-radius:8px;color:var(--text);text-decoration:none;font:600 .88rem/1.3 system-ui,sans-serif;background:#ffffff05}
+.site-menu-links a:hover,.site-menu-links a:focus-visible{background:#d9c5ff;color:#11152a;border-color:#d9c5ff}
+.menu-heading{font:700 1rem system-ui,sans-serif;color:var(--amber);margin:.5rem 0}
+@media(max-width:600px){.site-menu-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.site-menu-links a{font-size:.85rem;padding:.5rem}}
