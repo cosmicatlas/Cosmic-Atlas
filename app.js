@@ -76,6 +76,28 @@ if(cosmicSlider){
  }
  cosmicSlider.addEventListener("input",updateCosmicTimeline);updateCosmicTimeline();
 }
+/* Set orbital phases from the current date using approximate J2000 mean longitudes.
+   This is a live, circular-orbit illustration, not a precision ephemeris. */
+(function(){
+ var stage=document.querySelector(".solar-stage");
+ if(!stage)return;
+ var epoch=Date.UTC(2000,0,1,12,0,0), now=Date.now(), days=(now-epoch)/86400000;
+ var bodies=[
+  ["mercury",87.969,252.251],["venus",224.701,181.979],
+  ["earth",365.256,100.464],["mars",686.980,355.453],
+  ["jupiter",4332.59,34.404],["saturn",10759.22,50.077],
+  ["uranus",30688.5,314.055],["neptune",60182,304.348]
+ ];
+ bodies.forEach(function(body){
+  var orbit=stage.querySelector("."+body[0]+"-orbit");
+  if(!orbit)return;
+  var phase=((body[2]+days*360/body[1])%360+360)%360;
+  var style=getComputedStyle(orbit);
+  var duration=parseFloat(style.getPropertyValue("--orbit-duration"))||60;
+  orbit.style.animationDelay=(-(phase/360)*duration)+"s";
+  orbit.style.setProperty("--phase-angle",phase+"deg");
+ });
+})();
 /* Interactive solar-system planet cards */
 var planetData={
  Mercury:{type:"Terrestrial planet",year:"88 Earth days",fact:"The smallest planet and the closest to the Sun. Its heavily cratered surface records a long history of impacts."},
