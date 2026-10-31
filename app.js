@@ -13,7 +13,7 @@ if (isHome) {
   intro.innerHTML='<div class="mini-opening-orbit"><span></span></div><div class="mini-opening-title">COSMIC <b>ATLAS</b></div><div class="mini-opening-sub">Explore the universe</div>';
   document.body.appendChild(intro);
   var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},320)};
-  window.setTimeout(finishIntro,1250);
+  window.setTimeout(finishIntro,2000);
  
 }
 var live=Object.keys(LIVE).map(Number).sort(function(a,b){return a-b}),BY={};CH.forEach(function(c){BY[c[1]]=c});
