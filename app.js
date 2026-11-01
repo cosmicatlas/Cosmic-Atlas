@@ -4,18 +4,18 @@ var path = window.location.pathname;
 var isHome = /(?:^|\/)index\.html$/.test(path) || /\/Cosmic-Atlas\/$/.test(path) || path === "/";
 var introSeen = false;
 try { introSeen = localStorage.getItem("cosmic-atlas-intro-seen-v2") === "1"; } catch(e) {}
-if (isHome) {
+if (isHome && !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
  // Compact Cosmic Atlas launch sequence; show on each homepage load so stale browser storage cannot suppress it.
  var intro=document.createElement("div");
   intro.className="atlas-intro atlas-cinematic";
-  intro.setAttribute("role","status");
-  intro.setAttribute("aria-label","Cosmic Atlas is launching");
+  intro.setAttribute("role","presentation");
+  intro.setAttribute("aria-hidden","true");
   var stars="";
   for(var si=0;si<72;si++){
    var sx=((si*47+13)%997)/10,sy=((si*71+29)%991)/10,sd=(si%9===0?3:si%3===0?2:1);
    stars+='<i class="cinema-star" style="--x:'+sx+'%;--y:'+sy+'%;--d:'+sd+'px;--delay:-'+((si%18)/10)+'s"></i>';
   }
-  intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars">'+stars+'</div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><div class="planet-cloud"></div></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE AND TIME</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button">Skip intro</button>';
+  intro.innerHTML='<div class="cinema-nebula nebula-a"></div><div class="cinema-nebula nebula-b"></div><div class="cinema-stars">'+stars+'</div><div class="cinema-streaks"></div><div class="cinema-sun"></div><div class="cinema-planet-wrap"><div class="cinema-planet"><div class="planet-cloud"></div></div><div class="cinema-ring"></div></div><div class="cinema-flare"></div><div class="cinema-copy"><div class="cinema-kicker">A JOURNEY THROUGH SPACE AND TIME</div><div class="cinema-title">COSMIC <span>ATLAS</span></div><div class="cinema-sub">EXPLORE THE UNIVERSE</div></div><div class="cinema-progress"><i></i></div><button class="intro-skip" type="button" aria-label="Skip the opening animation">Skip intro</button>';
   document.body.appendChild(intro);
   var finishIntro=function(){if(!intro.isConnected)return;intro.classList.add("intro-hide");window.setTimeout(function(){if(intro.isConnected)intro.remove()},850)};
   intro.querySelector(".intro-skip").addEventListener("click",finishIntro);
