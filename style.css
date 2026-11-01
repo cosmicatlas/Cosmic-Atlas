@@ -611,3 +611,38 @@ footer{margin-top:2rem}
 @media(max-width:760px){.site-primary-links{display:none}}
 @media(min-width:761px){#mb{padding:.55rem .8rem}.home-section{margin-top:4.5rem;margin-bottom:4.5rem}}
 @media(max-width:480px){.reading-section{padding:1rem .75rem}.explorer-section{margin:2.5rem 0}}
+
+
+/* Consistent interior-page structure */
+.page-intro{margin:0 0 2rem;padding:clamp(1.2rem,4vw,2rem);border:1px solid var(--line);border-radius:18px;background:radial-gradient(ellipse at 100% 0%,#293b7050,transparent 58%),linear-gradient(145deg,#11182b,#090d1b)}
+.page-intro h1{margin:.2rem 0 .6rem;font-size:clamp(2rem,5vw,3.1rem);letter-spacing:-.035em}
+.page-intro .lede{max-width:62ch;margin:.5rem 0 0}
+.glossary-page{max-width:850px}
+.glossary-browser{padding:clamp(1rem,3vw,1.6rem);border:1px solid var(--line);border-radius:16px;background:#0b1020}
+.glossary-search-wrap{max-width:38rem}
+.glossary-search-wrap input{margin-bottom:.5rem}
+dl.g{margin:1.2rem 0 0}
+dl.g dt{padding-top:1rem;border-top:1px solid #27325a;font-size:1.1rem}
+dl.g dd{padding:0 0 1rem;color:#c5cee2;line-height:1.7}
+.chapter-article{max-width:760px;margin:0 auto}
+#chapter-title{font-size:clamp(2rem,5vw,3.25rem);letter-spacing:-.035em;margin:.6rem 0}
+#chapter-summary{max-width:68ch;margin:1rem 0 1.5rem}
+#chapter-body{font-size:1.08rem;line-height:1.85}
+#chapter-body h2{margin-top:2.7rem;padding-top:.4rem;font-size:clamp(1.5rem,3.5vw,2rem)}
+#chapter-body h3{margin-top:1.8rem;color:var(--cyan);font-size:1.2rem}
+#chapter-body p,#chapter-body li{max-width:72ch}
+#chapter-body blockquote{margin:1.5rem 0;padding:.9rem 1.2rem;border-left:3px solid var(--violet);background:#11182b;color:#d6dcef;border-radius:0 12px 12px 0}
+#chapter-body table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+.community-page{max-width:1050px}
+.community-intro{margin-bottom:1.5rem}
+.community-create{max-width:760px}
+.community-directory,.community-latest,.community-guidelines{margin:3rem 0}
+.community-directory>h2,.community-latest>h2,.community-guidelines>h2{padding-bottom:.55rem;border-bottom:1px solid var(--line)}
+#community-list .card{margin:0;min-height:150px}
+.community-guidelines{padding:1.25rem 1.5rem;border:1px solid var(--line);border-radius:16px;background:#0b1020}
+.community-guidelines li{margin:.7rem 0}
+@media(max-width:600px){
+ .page-intro{padding:1.1rem}
+ .community-guidelines{padding:1rem}
+ #chapter-body{font-size:1rem}
+}
