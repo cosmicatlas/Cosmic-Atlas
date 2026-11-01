@@ -821,3 +821,23 @@ button, input, textarea, select { accent-color:var(--cyan); }
   .btn, button, input, textarea, select, .card { border:1px solid ButtonText; }
   a { color:LinkText; }
 }
+
+
+/* Animated menu control */
+#mb {
+  display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
+  cursor:pointer; transition:background-color .22s ease,border-color .22s ease,transform .22s ease;
+}
+#mb:hover { border-color:var(--cyan); transform:translateY(-1px); }
+#mb:active { transform:scale(.96); }
+.menu-icon { width:19px; height:16px; display:inline-flex; flex-direction:column; justify-content:space-between; position:relative; flex:none; }
+.menu-icon i { display:block; width:19px; height:2px; border-radius:2px; background:currentColor; transform-origin:center; transition:transform .28s ease,opacity .2s ease,width .2s ease; }
+#mb.menu-open .menu-icon i:first-child { transform:translateY(7px) rotate(45deg); }
+#mb.menu-open .menu-icon i:nth-child(2) { opacity:0; transform:scaleX(.25); }
+#mb.menu-open .menu-icon i:last-child { transform:translateY(-7px) rotate(-45deg); }
+#mb .menu-label { transition:letter-spacing .22s ease; }
+#mb.menu-open .menu-label { letter-spacing:.02em; }
+@media (prefers-reduced-motion: reduce) {
+  #mb, #mb .menu-icon i, #mb .menu-label { transition:none !important; }
+  #mb:hover, #mb:active { transform:none; }
+}
