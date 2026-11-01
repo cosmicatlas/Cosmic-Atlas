@@ -724,3 +724,75 @@ html[data-theme="light"] .site-menu-links a {
   color:var(--text);
   border-color:var(--line);
 }
+
+
+/* Mobile-first readability, touch targets, and rendering efficiency */
+@media (max-width:760px) {
+  body { font-size:16px; line-height:1.65; }
+  main { width:100%; padding:1.1rem .9rem 2.5rem; }
+  h1 { font-size:clamp(1.85rem,8vw,2.45rem); overflow-wrap:anywhere; }
+  h2 { font-size:clamp(1.3rem,5.8vw,1.65rem); }
+  p, li { overflow-wrap:break-word; }
+  img, video, iframe { max-width:100%; }
+  .hero { padding:1.4rem 0 .8rem; }
+  .hero-copy h1 { font-size:clamp(2.8rem,14vw,4.5rem); }
+  .hero-copy>p:not(.meta):not(.tagline) { font-size:1rem; line-height:1.65; }
+  .tagline { font-size:1.12rem; }
+  .hero-actions { display:grid; grid-template-columns:1fr; gap:.45rem; }
+  .hero-actions .btn { display:flex; justify-content:center; align-items:center; width:100%; margin:.15rem 0; }
+  .hero-pills { display:flex; flex-wrap:wrap; gap:.4rem; }
+  .cosmic-stats { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .cosmic-stat { min-width:0; }
+  .cosmic-stat strong { font-size:clamp(1.25rem,6vw,1.8rem); }
+  .cosmic-stat span { font-size:.7rem; line-height:1.35; }
+  .home-section { margin-top:2.8rem; margin-bottom:2.8rem; }
+  .section-heading { margin-bottom:1rem; }
+  .card { padding:.9rem; margin:.8rem 0; }
+  .solar-stage { width:100%; min-height:300px; }
+  .solar-info { min-width:0; }
+  .planet-picker { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.4rem; }
+  .planet-picker button { min-width:0; min-height:44px; padding:.45rem .2rem; font-size:.78rem; }
+  .nasa-results { gap:.65rem; }
+  .nasa-card-copy { padding:.65rem; min-width:0; }
+  .nasa-card h3 { overflow-wrap:anywhere; }
+  .nasa-search-row { display:flex; flex-direction:column; gap:.4rem; }
+  .nasa-search-row .btn { width:100%; margin:0; }
+  input, textarea, select { font-size:16px; }
+  button, .btn, summary, .site-menu-links a { touch-action:manipulation; }
+  button, .btn { min-height:44px; }
+  .pn { gap:.5rem; }
+  .pn a { min-width:0; overflow-wrap:anywhere; }
+  #chapter-body { font-size:1rem; line-height:1.75; }
+  #chapter-body img { width:auto; max-height:65vh; object-fit:contain; }
+  .community-search-row, .tag-create-row { display:flex; flex-direction:column; gap:.35rem; }
+  .community-search-row .btn, .tag-create-row .btn { width:100%; margin:0; }
+  .community-grid, .feature-grid { grid-template-columns:1fr; }
+  .actions { display:grid; grid-template-columns:1fr; }
+  .actions .btn { width:100%; margin:0; }
+  .cosmic-milestones { gap:.15rem; font-size:.62rem; }
+  .cosmic-milestones span { min-width:0; overflow-wrap:anywhere; }
+  /* Keep animations but avoid persistent GPU layer hints and expensive blur on phones. */
+  .solar-orbit { will-change:auto; }
+  .cinema-nebula { filter:blur(24px); opacity:.24; }
+  .cinema-streaks { opacity:.45; }
+  .cinema-star:nth-child(n+37) { display:none; }
+  .cinema-planet { box-shadow:inset -18px -8px 24px #01030e,inset 5px 3px 14px #ffffff55,0 0 22px #73b9ff66; }
+  .planet-cloud { filter:blur(2px); }
+  .atlas-cinematic:before { animation-duration:4.8s; }
+  .cinema-nebula { animation-duration:8s; }
+}
+@media (max-width:390px) {
+  main { padding-left:.75rem; padding-right:.75rem; }
+  .cosmic-stats { grid-template-columns:1fr; }
+  .cosmic-stat { display:flex; justify-content:space-between; align-items:center; gap:.6rem; }
+  .cosmic-stat span { max-width:60%; text-align:right; }
+  .hero-visual { height:230px; }
+  .solar-stage { min-height:280px; }
+  .planet-picker { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .nasa-results { grid-template-columns:1fr; }
+  .pn { flex-direction:column; }
+  .pn .nx { text-align:left; }
+}
+@media (hover:none) and (pointer:coarse) {
+  .card:hover, .feature-card:hover, .btn:hover { transform:none; box-shadow:none; }
+}
