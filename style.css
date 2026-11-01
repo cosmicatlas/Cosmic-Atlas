@@ -592,3 +592,22 @@ footer{margin-top:2rem}
  .home-section{margin:2.5rem 0}
 }
 @media(prefers-reduced-motion:reduce){.feature-card:hover{transform:none}}
+
+
+/* Final information architecture pass */
+.skip-link{position:fixed;top:.5rem;left:.5rem;z-index:10001;padding:.65rem 1rem;border-radius:8px;background:var(--amber);color:#171006;font:700 .9rem system-ui,sans-serif;transform:translateY(-160%);text-decoration:none}
+.skip-link:focus{transform:translateY(0)}
+.home-cosmic{max-width:1180px}
+.reading-section{padding:clamp(1.2rem,3vw,2rem);border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#11182bdf,#080c18ee);box-shadow:0 20px 60px #0002}
+.reading-section .section-heading h2{margin-top:.2rem}
+.reading-section .section-heading{align-items:center}
+.reading-section #cms-chapters{margin-top:1.2rem}
+.explorer-section{margin:3.5rem 0}
+.explorer-section>.cosmic-explorer{margin:0}
+.home-section[id],.explorer-section[id]{scroll-margin-top:100px}
+.site-primary-links{display:flex;align-items:center;gap:.35rem}
+.site-primary-links a{display:inline-flex;align-items:center;min-height:42px;padding:.45rem .7rem;border-radius:8px;color:var(--text);text-decoration:none;font:600 .88rem system-ui,sans-serif}
+.site-primary-links a:hover,.site-primary-links a[aria-current=page]{background:#ffffff0c;color:var(--amber)}
+@media(max-width:760px){.site-primary-links{display:none}}
+@media(min-width:761px){#mb{padding:.55rem .8rem}.home-section{margin-top:4.5rem;margin-bottom:4.5rem}}
+@media(max-width:480px){.reading-section{padding:1rem .75rem}.explorer-section{margin:2.5rem 0}}
