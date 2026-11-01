@@ -796,3 +796,28 @@ html[data-theme="light"] .site-menu-links a {
 @media (hover:none) and (pointer:coarse) {
   .card:hover, .feature-card:hover, .btn:hover { transform:none; box-shadow:none; }
 }
+
+
+/* Accessibility: visible focus, clear links, form grouping, and contrast modes */
+html { scroll-padding-top: 6rem; }
+a { text-decoration-thickness: .08em; text-underline-offset: .18em; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--amber); outline-offset: 3px; box-shadow: 0 0 0 2px var(--bg);
+}
+.site-primary-links a, .site-menu-links a, .brand { text-decoration: none; }
+.sr { position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important; }
+fieldset { min-width:0; margin:1rem 0; padding:.8rem 1rem; border:1px solid var(--line); border-radius:10px; }
+legend { padding:0 .35rem; font:600 .95rem system-ui,sans-serif; color:var(--text); }
+input::placeholder, textarea::placeholder { color:var(--mute); opacity:1; }
+button, input, textarea, select { accent-color:var(--cyan); }
+@media (prefers-contrast: more) {
+  :root { --line:#8290b2; --mute:#d0d7e8; }
+  html[data-theme="light"] { --line:#59657c; --mute:#414d63; }
+  a { text-decoration:underline; }
+  .btn, button { border:2px solid currentColor; }
+}
+@media (forced-colors: active) {
+  :focus-visible { outline:3px solid Highlight!important; outline-offset:3px; }
+  .btn, button, input, textarea, select, .card { border:1px solid ButtonText; }
+  a { color:LinkText; }
+}
