@@ -541,3 +541,54 @@ html[data-theme="light"] .mini-opening-sub{color:#63799a}
 .site-menu-links a:hover,.site-menu-links a:focus-visible{background:#d9c5ff;color:#11152a;border-color:#d9c5ff}
 .menu-heading{font:700 1rem system-ui,sans-serif;color:var(--amber);margin:.5rem 0}
 @media(max-width:600px){.site-menu-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.site-menu-links a{font-size:.85rem;padding:.5rem}}
+
+
+/* Editorial layout refinement: clearer reading path and calmer responsive spacing */
+.home-cosmic{width:min(100% - 2rem,1180px);padding-left:0;padding-right:0}
+.home-cosmic>section{scroll-margin-top:100px}
+.cosmic-hero{margin-bottom:1.25rem}
+.cosmic-stats{margin-top:0;margin-bottom:2rem}
+.cosmic-stat{padding:1.1rem 1.2rem;border:1px solid #27325a;border-radius:14px;background:linear-gradient(145deg,#11182cdd,#090d19dd)}
+.cosmic-stat strong{display:block;font:800 clamp(1.5rem,3vw,2.2rem)/1.1 system-ui,sans-serif;color:var(--amber);letter-spacing:-.04em}
+.cosmic-stat span{display:block;margin-top:.45rem;font:.86rem/1.45 system-ui,sans-serif;color:var(--mute)}
+.home-section{margin:4rem 0}
+.home-section+.home-section{padding-top:.25rem}
+.section-heading{margin-bottom:1.35rem}
+.section-heading h2,.principles h2{max-width:18ch}
+.feature-card{display:flex;flex-direction:column;align-items:flex-start;min-height:220px;padding:1.25rem;border-radius:16px;border:1px solid var(--line);background:#0d1324;text-decoration:none;transition:transform .2s ease,border-color .2s ease}
+.feature-card p{color:var(--mute);font:.95rem/1.6 system-ui,sans-serif}
+.feature-card .feature-arrow{margin-top:auto;padding-top:.7rem;font:600 .9rem system-ui,sans-serif}
+.feature-card:hover{transform:translateY(-3px);border-color:#6275ad}
+#cms-chapters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+#cms-chapters>.card{margin:0;height:100%}
+#cms-chapters .card h3{line-height:1.35}
+#cms-chapters .card p{font: .94rem/1.65 system-ui,sans-serif;color:var(--mute)}
+#cms-chapters .empty-library{grid-column:1/-1}
+.cosmic-explorer{padding:clamp(1.2rem,3vw,2rem);border-radius:18px}
+.solar-stage,.solar-info{border:1px solid var(--line);border-radius:16px;background:#0a0f1e}
+.solar-info{padding:1.25rem}
+.nasa-search{padding:1.1rem;border:1px solid var(--line);border-radius:16px;background:#0d1324}
+.nasa-results:empty{display:none}
+.nasa-results{margin-top:1rem}
+.nasa-results>*{min-width:0}
+.community-banner{margin-top:.5rem}
+.principles{margin:4rem 0 1rem;padding:clamp(1.5rem,5vw,3rem);border:1px solid #4b5980;border-radius:20px;background:radial-gradient(ellipse at 90% 0%,#283a6955,transparent 55%),#0b1020}
+.principles>p:not(.eyebrow){max-width:66ch;color:var(--mute)}
+footer{margin-top:2rem}
+@media(max-width:760px){
+ .home-cosmic{width:min(100% - 1.2rem,1180px);padding-top:.5rem}
+ .cosmic-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+ .cosmic-stat{padding:.8rem .65rem}
+ .cosmic-stat span{font-size:.76rem}
+ #cms-chapters{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .home-section{margin:3rem 0}
+}
+@media(max-width:480px){
+ .cosmic-stats{grid-template-columns:1fr}
+ .cosmic-stat{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+ .cosmic-stat span{text-align:right;max-width:60%;margin:0}
+ #cms-chapters{grid-template-columns:1fr}
+ .feature-card{min-height:180px}
+ .home-section{margin:2.5rem 0}
+}
+@media(prefers-reduced-motion:reduce){.feature-card:hover{transform:none}}
